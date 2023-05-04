@@ -38,7 +38,8 @@ korali/.fetch:
 	> korali/.fetch
 
 lkorali: korali/.fetch
-	(cd korali && make 'USER = $(USER)'install)
+	cd korali && \
+		make 'USER = $(USER)' install
 
 .sh:
 	sed 's,%mph%,"$(PREFIX)"/share/MeshCyprusTM.mphtxt,g' $< > $@
