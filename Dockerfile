@@ -24,7 +24,7 @@ RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-p
 RUN dpkg --install /tmp/packages-microsoft-prod.deb
 RUN apt-get -qq update
 RUN apt-get -qq install --no-install-recommends dotnet-sdk-6.0
-RUN git clone --quiet --single-branch --depth 1 https://github.com/slitvinov/dcomex-prototype src
+RUN git clone --quiet --single-branch --depth 1 https://github.com/slitvinov/dcomex-framework src
 WORKDIR /src
 RUN make lbin lib
 RUN make lmsolve
