@@ -30,4 +30,4 @@ RUN make lbin lib
 RUN make lmsolve
 RUN make korali/.fetch
 WORKDIR /src/korali
-RUN make install 'CFLAGS_MPI = `pkg-config --cflags mpi-c`' 'CXXFLAGS_MPI = `pkg-config --cflags mpi-cxx`' 'MPICXX = g++' 'MPICC = gcc'
+RUN make install 'CFLAGS_MPI = `pkg-config --cflags mpi-c`' 'CXXFLAGS_MPI = `pkg-config --cflags mpi-cxx`' 'LDFLAGS_MPI = `pkg-config --libs mpi-cxx`' 'MPICXX = g++' 'MPICC = gcc'
