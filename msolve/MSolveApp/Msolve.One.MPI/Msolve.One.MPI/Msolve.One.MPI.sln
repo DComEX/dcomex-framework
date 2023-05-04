@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.808.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Msolve.One.MPI", "Msolve.One.MPI.csproj", "{CDA32C1C-AE7D-4E52-9F1D-DD4FFAA2E5A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDA32C1C-AE7D-4E52-9F1D-DD4FFAA2E5A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDA32C1C-AE7D-4E52-9F1D-DD4FFAA2E5A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDA32C1C-AE7D-4E52-9F1D-DD4FFAA2E5A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDA32C1C-AE7D-4E52-9F1D-DD4FFAA2E5A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A583E00-E546-4EA1-A11B-354905F5F051}
+	EndGlobalSection
+EndGlobal

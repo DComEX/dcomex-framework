@@ -1,0 +1,53 @@
+include:
+- remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
+
+
+stages:
+  - build_base # build stage is running on the Kubernetes cluster
+  - build # build stage is running on the Kubernetes cluster
+  - test  # test stage is running on Piz Daint
+
+variables:
+  PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/public/dcomex-prototype:$CI_COMMIT_SHORT_SHA
+  GIT_SUBMODULE_STRATEGY: recursive
+
+build_base:
+  extends: .container-builder
+  stage: build_base
+  before_script:
+    - DOCKER_TAG=`sha256sum ci/Dockerfile_base | head -c 16`
+    - export PERSIST_IMAGE_NAME=$CSCS_REGISTRY_PATH/public/base/dcomex-prototype:$DOCKER_TAG
+    - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" > build.env
+  artifacts:
+    reports:
+      dotenv: build.env
+  variables:
+    DOCKERFILE: ci/Dockerfile_base
+    DOCKER_BUILD_ARGS: '["MPICH_VERSION=3.1.4"]'
+
+
+build_software:
+  extends: .container-builder
+  stage: build
+  variables:
+    DOCKERFILE: ci/Dockerfile
+    DOCKER_BUILD_ARGS: '["BASE_IMAGE=${BASE_IMAGE}"]'
+
+run_prototype_test:
+  extends: .container-runner-daint-gpu
+  stage: test
+  image: ${PERSIST_IMAGE_NAME}
+  script:
+    - cd /src/tests/units/
+    - ./run.sh
+    - cd /src/tests/validation/inference_heat/
+    - OMP_NUM_THREADS=1 ./run_inference.py --num-cores 12 --num-samples 200
+    - cd /
+    - for i in src/follow.py src/graph.py src/kahan.py; do python3 -m doctest $i -v; done
+
+  variables:
+    USE_MPI: 'YES'
+    SLURM_PARTITION: 'normal'
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_NTASKS: 1
+    SLURM_TIMELIMIT: '00:15:00'

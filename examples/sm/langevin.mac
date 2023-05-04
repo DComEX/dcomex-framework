@@ -1,0 +1,27 @@
+load("distrib")$
+fun(x):= exp(-x^2);
+define(dfun('x), diff(log(fun('x)), 'x));
+
+set_random_state(make_random_state(1234567));
+S: [ ];
+x: 0.1;
+p: fun(x);
+y: x + 1/2 * h * dfun(x);
+t: 0;
+h: 0.01;
+draws: 1000;
+accept: 0;
+catch(
+while (true) do (
+  push(x, S),
+  if t >= draws then throw(S),
+  xp: random_normal(y, sqrt(h)),
+  pp: fun(xp),
+  yp: xp + 1/2 * h * dfun(xp),
+  lalpha: log(pp) - 1/2 * (xp - y)^2 / h^2 - log(p) + 1/2 * (x - yp)^2 / h^2,
+  alpha: exp(lalpha),
+  if random_continuous_uniform(0, 1) < alpha then (x: xp, p: pp, y: yp, accept: accept + 1),
+  t: t + 1
+  ))$
+disp(accept / draws), float;
+histogram(S, frequency = density, nclasses = 20);

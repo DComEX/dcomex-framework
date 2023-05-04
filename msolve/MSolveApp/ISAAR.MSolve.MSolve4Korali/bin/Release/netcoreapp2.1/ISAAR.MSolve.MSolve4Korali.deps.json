@@ -1,0 +1,151 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "ISAAR.MSolve.MSolve4Korali/1.0.0": {
+        "dependencies": {
+          "ISAAR.MSolve.Analyzers": "1.0.0.0",
+          "ISAAR.MSolve.Discretization": "1.0.0.0",
+          "ISAAR.MSolve.FEM": "0.0.0.0",
+          "ISAAR.MSolve.Geometry": "1.0.0.0",
+          "ISAAR.MSolve.LinearAlgebra": "1.0.0.0",
+          "ISAAR.MSolve.Logging": "1.0.0.0",
+          "ISAAR.MSolve.Materials": "1.0.0.0",
+          "ISAAR.MSolve.Problems": "1.0.0.0",
+          "ISAAR.MSolve.Solvers": "1.0.0.0"
+        },
+        "runtime": {
+          "ISAAR.MSolve.MSolve4Korali.dll": {}
+        }
+      },
+      "ISAAR.MSolve.Analyzers/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Analyzers.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Discretization/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Discretization.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.FEM/0.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.FEM.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Geometry/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Geometry.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.LinearAlgebra/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.LinearAlgebra.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Logging/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Logging.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Materials/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Materials.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Problems/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Problems.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Solvers/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Solvers.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ISAAR.MSolve.MSolve4Korali/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Analyzers/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Discretization/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.FEM/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Geometry/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.LinearAlgebra/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Logging/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Materials/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Problems/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Solvers/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

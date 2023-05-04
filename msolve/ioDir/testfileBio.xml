@@ -1,0 +1,16 @@
+<MSolve4Korali version="1.0">
+	<Mesh>
+		<File>MeshCyprusTM.mphtxt</File>
+	</Mesh>
+	<Physics type="TumorGrowth">
+		<Time>20</Time>
+		<Timestep>1</Timestep>
+	</Physics>
+	<Output>
+		<TumorVolume/>
+	</Output>
+	<Parameters>
+		<k1>0.5</k1>
+		<mu>0.3</mu>
+	</Parameters>
+</MSolve4Korali>

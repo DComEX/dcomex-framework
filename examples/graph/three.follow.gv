@@ -1,0 +1,7 @@
+digraph {
+  0 [label = "l1 ~ l0"]
+  1 [label = "l2 ~ l1"]
+  2 [label = "y ~ l2"]
+  0 -> 1
+  1 -> 2
+}

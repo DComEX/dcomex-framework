@@ -1,0 +1,22 @@
+function [ res, misc ] = loglike( theta, data )
+  alpha = theta(1);
+  beta = theta(2);
+  sigma = theta(3);
+  x = data.x;
+  y = data.y;
+  M = length(data.x);
+  dif   = y - alpha*x - beta;
+  sumsq = dif * dif';
+  sigma2 = sigma.^2;
+  sigma3 = sigma.^3;
+  res = -M*log(2*pi)/2 - M*log(sigma) - sumsq/sigma2/2;
+  sx = sum(x);
+  FIM = [x * x' sx 0; sx M 0; 0 0 2 * M];
+  inv_FIM = inv(FIM)*sigma2;
+  [V,D]  = eig(inv_FIM);
+  D      = diag(D);
+  misc.gradient =  [dif*x'/sigma2; sum(dif)/sigma2; -M./sigma + sumsq./sigma3];
+  misc.inv_G  = inv_FIM;
+  misc.V = V;
+  misc.D = D;
+end

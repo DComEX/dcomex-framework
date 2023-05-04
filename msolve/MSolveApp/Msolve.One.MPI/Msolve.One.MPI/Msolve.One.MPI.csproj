@@ -1,0 +1,99 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="3.1.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+      <PackageReference Include="CSparse" Version="3.2.3" />
+      <PackageReference Include="DotNumerics" Version="1.1.0" />
+      <PackageReference Include="ILGPU" Version="1.1.0" />
+      <PackageReference Include="ILGPU.Algorithms" Version="1.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MPI">
+      <HintPath>..\..\MPI.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.Environments.MPI">
+      <HintPath>..\..\MGroup.Environments.MPI.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.Environments">
+      <HintPath>..\..\MGroup.Environments.dll</HintPath>
+    </Reference>
+    <Reference Include="MPI">
+      <HintPath>..\..\MSolveLibs\MPI.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.Solvers.DDM">
+      <HintPath>..\..\MSolveLibs\MGroup.Solvers.DDM.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.NumericalAnalyzers">
+      <HintPath>..\..\MSolveLibs\MGroup.NumericalAnalyzers.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.MSolve.Discretization.Meshes">
+      <HintPath>..\..\MSolveLibs\MGroup.MSolve.Discretization.Meshes.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.FEM.Thermal">
+      <HintPath>..\..\MSolveLibs\MGroup.FEM.Thermal.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.FEM.Structural">
+      <HintPath>..\..\MSolveLibs\MGroup.FEM.Structural.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.Environments.MPI">
+      <HintPath>..\..\MSolveLibs\MGroup.Environments.MPI.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.Environments">
+      <HintPath>..\..\MSolveLibs\MGroup.Environments.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.Constitutive.Thermal">
+      <HintPath>..\..\MSolveLibs\MGroup.Constitutive.Thermal.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.Constitutive.Structural">
+      <HintPath>..\..\MSolveLibs\MGroup.Constitutive.Structural.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.MSolve.Solution">
+      <HintPath>..\..\MSolveLibs\MGroup.MSolve.Solution.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.Solvers">
+      <HintPath>..\..\MSolveLibs\MGroup.Solvers.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.MSolve.Numerics">
+      <HintPath>..\..\MSolveLibs\MGroup.MSolve.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.MSolve.Geometry">
+      <HintPath>..\..\MSolveLibs\MGroup.MSolve.Geometry.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.MSolve.Discretization">
+      <HintPath>..\..\MSolveLibs\MGroup.MSolve.Discretization.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.MSolve.DataStructures">
+      <HintPath>..\..\MSolveLibs\MGroup.MSolve.DataStructures.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.MSolve.Constitutive">
+      <HintPath>..\..\MSolveLibs\MGroup.MSolve.Constitutive.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.MSolve.AnalysisWorkflow">
+      <HintPath>..\..\MSolveLibs\MGroup.MSolve.AnalysisWorkflow.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.LinearAlgebra">
+      <HintPath>..\..\MSolveLibs\MGroup.LinearAlgebra.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.LinearAlgebra.Distributed">
+      <HintPath>..\..\MSolveLibs\MGroup.LinearAlgebra.Distributed.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.FEM">
+      <HintPath>..\..\MSolveLibs\MGroup.FEM.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.MSolve.Meshes">
+      <HintPath>..\..\MSolveLibs\MGroup.MSolve.Meshes.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

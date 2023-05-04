@@ -1,0 +1,167 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "c8953cdd53db9e826519428e6627b57925012f63"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "ISAAR.MSolve.MSolve4Korali/1.0.0": {
+        "dependencies": {
+          "DotNumerics": "1.1.0",
+          "ISAAR.MSolve.Analyzers": "1.0.0.0",
+          "ISAAR.MSolve.Discretization": "1.0.0.0",
+          "ISAAR.MSolve.FEM": "0.0.0.0",
+          "ISAAR.MSolve.Geometry": "1.0.0.0",
+          "ISAAR.MSolve.LinearAlgebra": "1.0.0.0",
+          "ISAAR.MSolve.Logging": "1.0.0.0",
+          "ISAAR.MSolve.Materials": "1.0.0.0",
+          "ISAAR.MSolve.Problems": "1.0.0.0",
+          "ISAAR.MSolve.Solvers": "1.0.0.0"
+        },
+        "runtime": {
+          "ISAAR.MSolve.MSolve4Korali.dll": {}
+        }
+      },
+      "DotNumerics/1.1.0": {
+        "runtime": {
+          "lib/DotNumerics.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Analyzers/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Analyzers.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Discretization/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Discretization.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.FEM/0.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.FEM.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Geometry/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Geometry.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.LinearAlgebra/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.LinearAlgebra.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Logging/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Logging.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Materials/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Materials.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Problems/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Problems.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ISAAR.MSolve.Solvers/1.0.0.0": {
+        "runtime": {
+          "ISAAR.MSolve.Solvers.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ISAAR.MSolve.MSolve4Korali/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DotNumerics/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uXB06Y7IP6AnoOK9/Cfyfmx5xxBxMfnqSHYcdxgT35+zUUqUEth9vyGy2EPj9HevGaDZFz76WngFXcMCBDvmUg==",
+      "path": "dotnumerics/1.1.0",
+      "hashPath": "dotnumerics.1.1.0.nupkg.sha512"
+    },
+    "ISAAR.MSolve.Analyzers/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Discretization/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.FEM/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Geometry/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.LinearAlgebra/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Logging/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Materials/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Problems/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ISAAR.MSolve.Solvers/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

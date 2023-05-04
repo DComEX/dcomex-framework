@@ -1,0 +1,11 @@
+digraph G {
+0 [label = "psi ~ uniform"]
+1 [label = "theta ~ normal(sigma=1)"]
+2 [label = "theta ~ normal(sigma=5)"]
+3 [label = "y[0] ~ normal(sigma=0.1)"]
+4 [label = "y[1] ~ normal(sigma=0.1)"]
+0 -> 1
+0 -> 2
+1 -> 3
+2 -> 4
+}

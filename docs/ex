@@ -1,0 +1,22 @@
+printf '%s\n' Examples
+printf '%s\n' ========
+printf '\n'
+for i in ../examples/*/*.py
+do b=`basename $i .py`
+   d=`dirname $i`
+   printf '%s\n' "$b.py"
+   printf -- '------------------------\n'
+   printf '.. literalinclude:: %s\n' "$i"
+   printf '   :language: python\n'
+   printf '\n'
+   if test -f "$d/$b.out"
+   then printf '.. literalinclude:: %s\n' "$d/$b.out"
+	printf '   :language: sh\n'
+	printf '\n'
+   fi
+   if test -f "$d/$b.png"
+   then printf '.. image:: %s\n' "$d/$b.png"
+	printf '\n'
+   fi
+done
+

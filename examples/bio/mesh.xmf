@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Xdmf xmlns:xi="http://www.w3.org/2001/XInclude" Version="3.0">
+  <Domain>
+    <Grid Name="Grid">
+      <Geometry Origin="" Type="XYZ">
+        <DataItem DataType="Float" Dimensions="2260 3" Format="HDF" Precision="4">q.h5:Data2</DataItem>
+      </Geometry>
+      <Topology Dimensions="8255" Type="Mixed">
+        <DataItem DataType="Int" Dimensions="43413" Format="HDF" Precision="8">q.h5:Data3</DataItem>
+      </Topology>
+    </Grid>
+  </Domain>
+</Xdmf>

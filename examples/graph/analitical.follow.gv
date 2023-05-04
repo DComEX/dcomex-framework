@@ -1,0 +1,11 @@
+digraph {
+  0 [label = "psi ~ uniform"]
+  1 [label = "theta[0] ~ psi"]
+  2 [label = "theta[1] ~ psi"]
+  3 [label = "y[0] ~ theta[0]"]
+  4 [label = "y[1] ~ theta[1]"]
+  0 -> 2
+  0 -> 1
+  2 -> 4
+  1 -> 3
+}

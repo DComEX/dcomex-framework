@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject>ISAAR.MSolve.MSolve4Korali.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="DotNumerics" Version="1.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ISAAR.MSolve.Analyzers">
+      <HintPath>bin\Debug\ISAAR.MSolve.Analyzers.dll</HintPath>
+    </Reference>
+    <Reference Include="ISAAR.MSolve.Discretization">
+      <HintPath>bin\Debug\ISAAR.MSolve.Discretization.dll</HintPath>
+    </Reference>
+    <Reference Include="ISAAR.MSolve.FEM">
+      <HintPath>bin\Debug\ISAAR.MSolve.FEM.dll</HintPath>
+    </Reference>
+    <Reference Include="ISAAR.MSolve.Geometry">
+      <HintPath>bin\Debug\ISAAR.MSolve.Geometry.dll</HintPath>
+    </Reference>
+    <Reference Include="ISAAR.MSolve.LinearAlgebra">
+      <HintPath>bin\Debug\ISAAR.MSolve.LinearAlgebra.dll</HintPath>
+    </Reference>
+    <Reference Include="ISAAR.MSolve.Logging">
+      <HintPath>bin\Debug\ISAAR.MSolve.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="ISAAR.MSolve.Materials">
+      <HintPath>bin\Debug\ISAAR.MSolve.Materials.dll</HintPath>
+    </Reference>
+    <Reference Include="ISAAR.MSolve.Problems">
+      <HintPath>bin\Debug\ISAAR.MSolve.Problems.dll</HintPath>
+    </Reference>
+    <Reference Include="ISAAR.MSolve.Solvers">
+      <HintPath>bin\Debug\ISAAR.MSolve.Solvers.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.Constitutive.Structural">
+      <HintPath>bioLibs\MGroup.Constitutive.Structural.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.FEM.Structural">
+      <HintPath>bioLibs\MGroup.FEM.Structural.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.LinearAlgebra">
+      <HintPath>bioLibs\MGroup.LinearAlgebra.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.LinearAlgebra.Distributed">
+      <HintPath>bioLibs\MGroup.LinearAlgebra.Distributed.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.MSolve.Core">
+      <HintPath>bioLibs\MGroup.MSolve.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.NumericalAnalyzers">
+      <HintPath>bioLibs\MGroup.NumericalAnalyzers.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.NumericalAnalyzers.Discretization">
+      <HintPath>bioLibs\MGroup.NumericalAnalyzers.Discretization.dll</HintPath>
+    </Reference>
+    <Reference Include="MGroup.Solvers">
+      <HintPath>bioLibs\MGroup.Solvers.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

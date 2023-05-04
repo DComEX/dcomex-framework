@@ -1,0 +1,9 @@
+digraph G {
+0 [label = "l0 ~ uniform"]
+1 [label = "l1 ~ half_normal(sigma=l0)"]
+2 [label = "l2 ~ half_normal(sigma=l1)"]
+3 [label = "y ~ half_normal(sigma=l2)"]
+0 -> 1
+1 -> 2
+2 -> 3
+}
