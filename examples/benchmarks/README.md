@@ -39,7 +39,7 @@ sarus pull $i
 i='jfrog.svc.cscs.ch/contbuild/testing/anfink/3810120997072523/public/dcomex-framework:08fe8d6c'
 for n in 2 4 8 16 32 64 128 256 512 1024 2048 4096
 do d=`echo $n | awk '{print 24 * $n}'`
-      sbatch -J $n -o out.$n.log -e err.$n.log -t 15 --hint=nomultithread -C gpu -A d124 --exclusive -n $n --wrap='srun sarus run --mpi '$i' python3 /src/examples/benchmarks/bio1.py -d '$d' -v -s
+      srun -o out.$n.log -e err.$n.log -C gpu -A d124 -n $n sarus run --mpi $i python3 /src/examples/benchmarks/bio1.py -d $d -v -s
       break
 done
 ```
