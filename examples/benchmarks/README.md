@@ -30,16 +30,41 @@ do d=`echo $n | awk '{print 24 * $n}'`
 # Multi node scaling efficency
 
 ```
-i='jfrog.svc.cscs.ch/contbuild/testing/anfink/3810120997072523/public/dcomex-framework:08fe8d6c'
-module load sarus
-sarus pull $i
+$ ssh daint srun -C gpu -A d124 -n 1 lscpu
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+Address sizes:       46 bits physical, 48 bits virtual
+CPU(s):              24
+On-line CPU(s) list: 0-23
+Thread(s) per core:  2
+Core(s) per socket:  12
+Socket(s):           1
+NUMA node(s):        1
+Vendor ID:           GenuineIntel
+CPU family:          6
+Model:               63
+Model name:          Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz
+Stepping:            2
+CPU MHz:             3110.175
+CPU max MHz:         2601.0000
+CPU min MHz:         1200.0000
+BogoMIPS:            5200.30
+Virtualization:      VT-x
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            256K
+L3 cache:            30720K
+NUMA node0 CPU(s):   0-23
 ```
 
 ```
+$ cat msolve/run
 i='jfrog.svc.cscs.ch/contbuild/testing/anfink/3810120997072523/public/dcomex-framework:08fe8d6c'
-for n in 2 4 8 16 32 64 128 256 512 1024 2048 4096
+module load sarus
+sarus pull $i
+for n in 2 4 8 16 32 64 128 256 512 1024 2048
 do d=`echo $n | awk '{print 24 * $n}'`
-      srun -o out.$n.log -e err.$n.log -C gpu -A d124 -n $n sarus run --mpi $i python3 /src/examples/benchmarks/bio1.py -d $d -v -s
-      break
+      srun -J $n.msolve -o out.$n.log -e err.$n.log -C gpu --cpus-per-task 2 -A d124 -n $n sarus run --mpi $i python3 /src/examples/benchmarks/bio1.py -d $d -v
 done
 ```

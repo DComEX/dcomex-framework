@@ -19,6 +19,10 @@ except ImportError:
     korali_package = None
 
 
+class KoraliNotFound(ModuleNotFoundError):
+    pass
+
+
 class Integral:
 
     def __init__(self,
@@ -412,7 +416,14 @@ def tmcmc(fun, draws, lo, hi, beta=1, return_evidence=False, trace=False):
         x2, x, f2, f = x, x2, f, f2
 
 
-def korali(fun, draws, lo, hi, beta=1, return_evidence=False, num_cores=None, comm=None):
+def korali(fun,
+           draws,
+           lo,
+           hi,
+           beta=1,
+           return_evidence=False,
+           num_cores=None,
+           comm=None):
     """Korali TMCMC sampler
 
     Parameters
@@ -451,7 +462,7 @@ def korali(fun, draws, lo, hi, beta=1, return_evidence=False, num_cores=None, co
     """
 
     if korali_package == None:
-        raise ModuleNotFoundError("korali sampler needs korali")
+        raise KoraliNotFound
 
     def fun0(ks):
         x = ks["Parameters"]
@@ -477,7 +488,8 @@ def korali(fun, draws, lo, hi, beta=1, return_evidence=False, num_cores=None, co
     if comm != None:
         k.setMPIComm(comm)
         k["Conduit"]["Type"] = "Distributed"
-        k["Conduit"]["Ranks Per Worker"] = 1 if num_cores == None else num_cores
+        k["Conduit"][
+            "Ranks Per Worker"] = 1 if num_cores == None else num_cores
     elif num_cores != None:
         k["Conduit"]["Type"] = "Concurrent"
         k["Conduit"]["Concurrent Jobs"] = num_cores
