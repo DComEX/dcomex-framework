@@ -27,10 +27,11 @@ def fun(x):
     except FileNotFoundError as e:
         sys.stderr.write("bio1.py: error: '%s' command not found\n" %
                          e.filename)
-        sys.exit(e.errno)
+        mpi4py.MPI.COMM_WORLD.Abort(e.errno)
     except subprocess.CalledProcessError as e:
         sys.stderr.write("bio1.py: error: command '%s' failed\n" % e.cmd)
-        sys.exit(e.returncode)
+        sys.stderr.write(e.stdout.decode("utf-8"))
+        mpi4py.MPI.COMM_WORLD.Abort(e.returncode)
     output = output.decode()
     try:
         volume = float(output)
