@@ -4,7 +4,11 @@ import graph
 import subprocess
 import sys
 import timeit
-
+try:
+    import mpi4py.MPI
+except ModuleNotFoundError:
+    sys.stderr.write("bio1.py: error: no python module mpi4py.MPI\n")
+    sys.exit(2)
 
 def fun(x):
     time = 1
@@ -23,7 +27,6 @@ def fun(x):
         sys.stderr.write("bio1.py: error: '%s' command not found\n" % e.filename)
         sys.exit(e.errno)
     except subprocess.CalledProcessError as e:
-        import pprint
         sys.stderr.write("bio1.py: error: command '%s' failed\n" % e.cmd)
         sys.exit(e.returncode)
     output = output.decode()
@@ -97,11 +100,6 @@ if draws is None:
     )
     sys.exit(2)
 
-try:
-    import mpi4py.MPI
-except ModuleNotFoundError:
-    sys.stderr.write("bio1.py: error: no python module mpi4py.MPI\n")
-    sys.exit(2)
 if mpi4py.MPI.COMM_WORLD.Get_size() < 2:
     sys.stderr.write(
         "bio1.py: error: distributed korali requires at least two MPI ranks\n")
