@@ -23,7 +23,7 @@ all: libkorali.so
 
 .cpp.o:
 	set -x && \
-	$(MPICXX) -c -fPIC -std=c++17 -I. -Ikorali/source $(CXXFLAGS_EIGEN3) $(CXXFLAGS_GSL) $(CXXFLAGS_MPI) $(CXXFLAGS_MPI4PY) $(CXXFLAGS_PYBIND11) $(CXXFLAGS_PYTHON) $(CXXFLAGS) $< -o $@
+	$(MPICXX) -c -fPIC -std=c++17 -I. -Isource $(CXXFLAGS_EIGEN3) $(CXXFLAGS_GSL) $(CXXFLAGS_MPI) $(CXXFLAGS_MPI4PY) $(CXXFLAGS_PYBIND11) $(CXXFLAGS_PYTHON) $(CXXFLAGS) $< -o $@
 
 libkorali.so: $O
 	$(LINK) -shared $O $(LDFLAGS_GSL) $(LDFLAGS_MPI) $(LDFLAGS) -o $@
