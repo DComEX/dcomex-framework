@@ -31,15 +31,8 @@ lmsolve:
 	(cd msolve/MSolveApp/ISAAR.MSolve.MSolve4Korali && \
 		DOTNET_CLI_TELEMETRY_OPTOUT=1 dotnet publish --nologo --configuration Release --output '$(PREFIX)/bin')
 
-korali/.fetch:
-	(cd korali && \
-		git clone --quiet --single-branch https://github.com/cselab/korali && \
-		cd korali && git checkout c70d8e32258b7e2b9ed977576997dfe946816419) && \
-	> korali/.fetch
-
-lkorali: korali/.fetch
-	cd korali && \
-		make 'USER = $(USER)' install
+lkorali:
+	cd korali && make 'USER = $(USER)' install
 
 .sh:
 	sed 's,%mph%,"$(PREFIX)"/share/MeshCyprusTM.mphtxt,g' $< > $@
