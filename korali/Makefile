@@ -37,8 +37,7 @@ install: libkorali.so $P
 	    *) p=`$(PY) -m site --user-site` || exit 2 ;; \
 	esac && \
 	for i in $P; \
-	do b=`echo "$$i" | sed 's,korali/python/,,g'` && \
-	   d=`dirname "$$b"` && \
+	do d=`dirname "$$i"` && \
 	   mkdir -p -- "$$p/$$d/" && \
 	   cp -- "$$i" "$$p/$$d/" || exit 2; \
 	done && \
