@@ -1,13 +1,13 @@
 P = \
-korali/python/korali/__init__.py\
-korali/python/korali/plot/LMCMAES.py\
-korali/python/korali/plot/__init__.py\
-korali/python/korali/plot/MCMC.py\
-korali/python/korali/plot/DEA.py\
-korali/python/korali/plot/Nested.py\
-korali/python/korali/plot/CMAES.py\
-korali/python/korali/plot/__main__.py\
-korali/python/korali/plot/MOCMAES.py\
-korali/python/korali/plot/SSM.py\
-korali/python/korali/plot/helpers.py\
-korali/python/korali/plot/TMCMC.py\
+korali/__init__.py\
+korali/plot/LMCMAES.py\
+korali/plot/__init__.py\
+korali/plot/MCMC.py\
+korali/plot/DEA.py\
+korali/plot/Nested.py\
+korali/plot/CMAES.py\
+korali/plot/__main__.py\
+korali/plot/MOCMAES.py\
+korali/plot/SSM.py\
+korali/plot/helpers.py\
+korali/plot/TMCMC.py\

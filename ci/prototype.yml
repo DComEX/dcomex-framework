@@ -8,7 +8,7 @@ stages:
   - test  # test stage is running on Piz Daint
 
 variables:
-  PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/public/dcomex-prototype:$CI_COMMIT_SHORT_SHA
+  PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/public/dcomex-framework:$CI_COMMIT_SHORT_SHA
   GIT_SUBMODULE_STRATEGY: recursive
 
 build_base:
@@ -16,7 +16,7 @@ build_base:
   stage: build_base
   before_script:
     - DOCKER_TAG=`sha256sum ci/Dockerfile_base | head -c 16`
-    - export PERSIST_IMAGE_NAME=$CSCS_REGISTRY_PATH/public/base/dcomex-prototype:$DOCKER_TAG
+    - export PERSIST_IMAGE_NAME=$CSCS_REGISTRY_PATH/public/base/dcomex-framework:$DOCKER_TAG
     - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" > build.env
   artifacts:
     reports:

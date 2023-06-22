@@ -6,7 +6,7 @@ To run Msolve and
 integration example use the
 [docker image](Dockerfile),
 ```
-$ docker build github.com/DComEX/dcomex-prototype --tag dcomex
+$ docker build github.com/DComEX/dcomex-framework --tag dcomex
 $ docker run -it dcomex bash
 ```
 inside the container run

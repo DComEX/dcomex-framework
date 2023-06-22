@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 import graph
 import matplotlib.pylab as plt
 import subprocess

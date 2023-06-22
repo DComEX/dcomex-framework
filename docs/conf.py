@@ -19,7 +19,7 @@ html_theme_options = {
       "image_light": "logo.png",
       "image_dark": "logo.png",
   },
-  "github_url": "https://github.com/DComEX/dcomex-prototype",
+  "github_url": "https://github.com/DComEX/dcomex-framework",
   "collapse_navigation": True,
 }
 

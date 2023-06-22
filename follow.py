@@ -137,7 +137,7 @@ def graphviz(buf):
     for i, v in enumerate(Vertices):
         Numbers[v] = i
         buf.write('  %d [label = "%s"]\n' % (i, Labels[v]))
-    key = lambda e : (Labels[e[0]], Labels[e[1]])
+    key = lambda e: (Labels[e[0]], Labels[e[1]])
     for v, w in sorted(Edges, key=key):
         buf.write("  %d -> %d\n" % (Numbers[v], Numbers[w]))
     buf.write("}\n")

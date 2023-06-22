@@ -32,10 +32,7 @@ lmsolve:
 		DOTNET_CLI_TELEMETRY_OPTOUT=1 dotnet publish --nologo --configuration Release --output '$(PREFIX)/bin')
 
 lkorali:
-	(cd korali && \
-		git clone --quiet --single-branch https://github.com/cselab/korali && \
-		(cd korali && git checkout c70d8e32258b7e2b9ed977576997dfe946816419) && \
-		make install 'USER = $(USER)')
+	cd korali && make 'USER = $(USER)' install
 
 .sh:
 	sed 's,%mph%,"$(PREFIX)"/share/MeshCyprusTM.mphtxt,g' $< > $@
