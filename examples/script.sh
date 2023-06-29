@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task 2
 
 . /etc/profile
-i='jfrog.svc.cscs.ch/contbuild/testing/anfink/3810120997072523/public/base/dcomex-framework:72387487716b188e'
+i='jfrog.svc.cscs.ch/contbuild/testing/anfink/3810120997072523/public/dcomex-framework:602d4d21'
 d=24
 module load sarus
 sarus pull $i
