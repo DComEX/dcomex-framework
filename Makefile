@@ -6,10 +6,11 @@ PREFIX = /usr
 USER = 0
 
 M = \
-setup.py\
 follow.py\
 graph.py\
 kahan.py\
+remote.py\
+setup.py\
 
 B = \
 bin/bio\
