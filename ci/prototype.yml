@@ -6,6 +6,7 @@ stages:
   - build_base # build stage is running on the Kubernetes cluster
   - build # build stage is running on the Kubernetes cluster
   - test  # test stage is running on Piz Daint
+  - deploy # deploy container if all tests passed
 
 variables:
   PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/public/dcomex-framework:$CI_COMMIT_SHORT_SHA
@@ -51,3 +52,14 @@ run_prototype_test:
     SLURM_JOB_NUM_NODES: 1
     SLURM_NTASKS: 1
     SLURM_TIMELIMIT: '00:15:00'
+
+deploy container image:
+  # deploy under a fix name when merging into master and all tests pass
+  extends: .container-builder
+  stage: deploy
+  variables:
+    DOCKERFILE: ci/Dockerfile_deploy
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/public/deploy/dcomex-framework:latest
+    DOCKER_BUILD_ARGS: '["FROM_IMAGE=$CSCS_REGISTRY_PATH/public/dcomex-framework:$CI_COMMIT_SHORT_SHA"]'
+  rules:
+    - if: $CI_COMMIT_REF_NAME == master
