@@ -63,3 +63,6 @@ deploy container image:
     DOCKER_BUILD_ARGS: '["FROM_IMAGE=$CSCS_REGISTRY_PATH/public/dcomex-framework:$CI_COMMIT_SHORT_SHA"]'
   rules:
     - if: $CI_COMMIT_REF_NAME == master
+    - if: $CI_COMMIT_REF_NAME != master
+      variables:
+        PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/public/deploy/$CI_COMMIT_REF_NAME/dcomex-framework:latest
