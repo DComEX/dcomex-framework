@@ -13,17 +13,12 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 build_base:
-  extends: .container-builder
+  extends: .container-builder-dynamic-name
   stage: build_base
-  before_script:
-    - DOCKER_TAG=`sha256sum ci/Dockerfile_base | head -c 16`
-    - export PERSIST_IMAGE_NAME=$CSCS_REGISTRY_PATH/public/base/dcomex-framework:$DOCKER_TAG
-    - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" > build.env
-  artifacts:
-    reports:
-      dotenv: build.env
   variables:
     DOCKERFILE: ci/Dockerfile_base
+    WATCH_FILECHANGES: ci/Dockerfile_base
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/public/base/dcomex-framework
     DOCKER_BUILD_ARGS: '["MPICH_VERSION=3.1.4"]'
 
 
