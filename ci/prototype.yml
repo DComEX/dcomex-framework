@@ -6,23 +6,19 @@ stages:
   - build_base # build stage is running on the Kubernetes cluster
   - build # build stage is running on the Kubernetes cluster
   - test  # test stage is running on Piz Daint
+  - deploy # deploy container if all tests passed
 
 variables:
   PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/public/dcomex-framework:$CI_COMMIT_SHORT_SHA
   GIT_SUBMODULE_STRATEGY: recursive
 
 build_base:
-  extends: .container-builder
+  extends: .container-builder-dynamic-name
   stage: build_base
-  before_script:
-    - DOCKER_TAG=`sha256sum ci/Dockerfile_base | head -c 16`
-    - export PERSIST_IMAGE_NAME=$CSCS_REGISTRY_PATH/public/base/dcomex-framework:$DOCKER_TAG
-    - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" > build.env
-  artifacts:
-    reports:
-      dotenv: build.env
   variables:
     DOCKERFILE: ci/Dockerfile_base
+    WATCH_FILECHANGES: ci/Dockerfile_base
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/public/base/dcomex-framework
     DOCKER_BUILD_ARGS: '["MPICH_VERSION=3.1.4"]'
 
 
@@ -51,3 +47,18 @@ run_prototype_test:
     SLURM_JOB_NUM_NODES: 1
     SLURM_NTASKS: 1
     SLURM_TIMELIMIT: '00:15:00'
+
+deploy container image:
+  # deploy under a fix name when merging into master and all tests pass
+  extends: .container-builder
+  stage: deploy
+  variables:
+    DOCKERFILE: ci/Dockerfile_deploy
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/public/deploy/dcomex-framework:latest
+    DOCKER_BUILD_ARGS: '["FROM_IMAGE=$CSCS_REGISTRY_PATH/public/dcomex-framework:$CI_COMMIT_SHORT_SHA"]'
+    CSCS_REBUILD_POLICY: always
+  rules:
+    - if: $CI_COMMIT_REF_NAME == "master"
+    - if: $CI_COMMIT_REF_NAME != "master"
+      variables:
+        PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/public/deploy/$CI_COMMIT_REF_SLUG/dcomex-framework:latest
