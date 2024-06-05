@@ -1,0 +1,9 @@
+f: (2 * pi * s2)^(-n/2) * exp(-1/2 * sq / s2);
+l: log(f), logexpand=all;
+
+dl: diff(l, s2);
+so: solve(dl, s2);
+
+expand(l), so;
+xo
+expand(l);

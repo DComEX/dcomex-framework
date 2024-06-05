@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for i
+do cat "$i"
+   printf '\n'
+done
