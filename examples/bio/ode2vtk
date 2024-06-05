@@ -1,0 +1,117 @@
+#!/usr/bin/awk -f
+
+function get() {
+    for (;;) {
+	if (getline != 1) {
+	    printf "ode2vtk: get failed\n" | "cat >&2"
+	    exit(1)
+	}
+	sub(/#.*/, "")
+	if ($0 !~ /^[ \t]*$/)
+	    break
+    }
+}
+
+BEGIN {
+    RS = "\r\n"
+    ode2vtk["3 vtx"] = 1 # VTK_VERTEX
+    ode2vtk["3 edg"] = 3 # VTK_LINE
+    ode2vtk["3 tri"] = 5 # VTK_TRIANGLE
+    ode2vtk["3 tet"] = 10 # VTK_TETRA
+    ode2vtk["5 prism"] = 13 # VTK_WEDGE
+
+    mph2name["3 vtx"] = "VTK_VERTEX"
+    mph2name["3 edg"] = "VTK_LINE"
+    mph2name["3 tri"] = "VTK_TRIANGLE"
+    mph2name["3 tet"] = "VTK_TETRA"
+    mph2name["5 prism"] = "VTK_WEDGE"
+
+    get() # major = $1; minor = $2
+    get() # number_of_tags = $1
+    get() # tags
+    get() # number of types
+    get() # types
+    get() # 0 0 1
+    get() # 4 Mesh
+    get() # version
+    get(); sdim = $1 # sdim
+    if (sdim != 3) {
+	printf "ode2vtk: only sdim = 3 is supported, given '%d'\n", sdim | "cat >&2"
+	exit(1)
+    }
+    get(); nv = $1
+    get()
+    for (i = 0; i < nv + i0; i++) {
+	get()
+	x[i] = $1
+	y[i] = $2
+	z[i] = $3
+    }
+    get() # number of element types
+    nt = $1
+    for (i = 0; i < nt; i++) {
+	get()
+	name[i] = $1 " " $2
+	if (!(name[i] in ode2vtk)) {
+	    printf "ode2vtk: unknown type name: '%s'\n", name[i] | "cat >&2"
+	    exit(1)
+	}
+	get()
+	np[i] = $1
+	get()
+	ne[i] = $1
+	for (j = 0; j < ne[i]; j++) {
+	    get()
+	    for (k = 0; k < np[i]; k++)
+		element[i, j, k] = $(k + 1)
+	}
+	get()
+	ng[i] = $1
+	for (j = 0; j < ng[i]; j++)
+	    get()
+    }
+    for (i = 0; i < nt; i++)
+	if (mph2name[name[i]] == "VTK_TETRA")  {
+	    l = i
+	    break
+	}
+    Ne = ne[l]
+    Nd = ne[l] * (np[l] + 1)
+    RS = "\n"
+    ifile = 0
+    getline < ARGV[2]
+    while (1) {
+	if (rc = getline < ARGV[2] != 1)
+	    break
+	path = sprintf("a.%08d.vtk", ifile++)
+	print "# vtk DataFile Version 2.0" > path
+	print "ode2vtk" > path
+	print "ASCII" > path
+	print "DATASET UNSTRUCTURED_GRID" > path
+	printf "POINTS %d float\n", nv > path
+	for (i = 0; i < nv; i++)
+	    print x[i], y[i], z[i] > path
+	printf "CELLS %d %d\n", Ne, Nd > path
+	for (j = 0; j < ne[l]; j++) {
+	    printf "%d", np[l] > path
+	    for (k = 0; k < np[l]; k++)
+		printf " %d", element[l, j, k] > path
+	    printf "\n" > path
+	}
+	printf "CELL_TYPES %d\n", Ne > path
+	vtk = ode2vtk[name[l]]
+	for (j = 0; j < ne[l]; j++)
+	    print vtk > path
+	printf "CELL_DATA %d\n", Ne > path
+	print "SCALARS type float" > path
+	print "LOOKUP_TABLE default" > path
+	if (NF != Ne) {
+	    printf "ode2vtk: %s: NF=%d != Ne=%d\n",
+		FILENAME, NF, Ne | "cat >&2"
+	    exit(1)
+	}
+	#print NF, $1 | "cat >&2"
+	for (i = 1; i <= NF; i++)
+	    print $i > path
+    }
+}

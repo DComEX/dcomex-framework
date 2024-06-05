@@ -225,33 +225,33 @@ class Agent : public Solver
   */
    size_t _currentEpisode;
   /**
-  * @brief [Internal Use] Keeps a history of all training episode rewards.
+  * @brief [Internal Use] Keeps a history of all training episode returns.
   */
-   std::vector<std::vector<float>> _trainingRewardHistory;
+   std::vector<std::vector<float>> _trainingReturnHistory;
   /**
-  * @brief [Internal Use] Keeps a history of all training episode discounted rewards.
+  * @brief [Internal Use] Keeps a history of all training episode discounted returns.
   */
-   std::vector<std::vector<float>> _trainingDiscountedRewardHistory;
+   std::vector<std::vector<float>> _trainingDiscountedReturnHistory;
   /**
   * @brief [Internal Use] Keeps a history of all training episode experience counts.
   */
    std::vector<size_t> _trainingExperienceHistory;
   /**
-  * @brief [Internal Use] Keeps a history of all training episode rewards.
+  * @brief [Internal Use] Keeps a history of all training episode returns.
   */
-   std::vector<float> _testingAverageRewardHistory;
+   std::vector<float> _testingAverageReturnHistory;
   /**
-  * @brief [Internal Use] Contains a running average of the training episode rewards.
+  * @brief [Internal Use] Contains a running average of the training episode returns.
   */
-   std::vector<float> _trainingAverageReward;
+   std::vector<float> _trainingAverageReturn;
   /**
   * @brief [Internal Use] Remembers the cumulative sum of rewards for the last training episode.
   */
-   std::vector<float> _trainingLastReward;
+   std::vector<float> _trainingLastReturn;
   /**
   * @brief [Internal Use] Remembers the best cumulative sum of rewards found so far in any episodes.
   */
-   std::vector<float> _trainingBestReward;
+   std::vector<float> _trainingBestReturn;
   /**
   * @brief [Internal Use] Remembers the episode that obtained the maximum cumulative sum of rewards found so far.
   */
@@ -267,15 +267,15 @@ class Agent : public Solver
   /**
   * @brief [Internal Use] The cumulative sum of rewards obtained when evaluating the testing samples.
   */
-   std::vector<float> _testingReward;
+   std::vector<float> _testingReturn;
   /**
   * @brief [Internal Use] Remembers the best cumulative sum of rewards from latest testing episodes, if any.
   */
-   float _testingBestReward;
+   float _testingBestReturn;
   /**
   * @brief [Internal Use] Remembers the worst cumulative sum of rewards from latest testing episodes, if any.
   */
-   float _testingWorstReward;
+   float _testingWorstReturn;
   /**
   * @brief [Internal Use] Remembers the episode Id that obtained the maximum cumulative sum of rewards found so far during testing.
   */
@@ -287,11 +287,11 @@ class Agent : public Solver
   /**
   * @brief [Internal Use] Remembers the average cumulative sum of rewards from latest testing episodes, if any.
   */
-   float _testingAverageReward;
+   float _testingAverageReturn;
   /**
   * @brief [Internal Use] Remembers the best cumulative sum of rewards found so far from testing episodes.
   */
-   float _testingBestAverageReward;
+   float _testingBestAverageReturn;
   /**
   * @brief [Internal Use] Stores the best testing policies configuration found so far.
   */

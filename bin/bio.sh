@@ -1,9 +1,15 @@
 #!/bin/sh
 
 : ${mph=%mph%}
-Verbose=0
-Config=0
-Surrogate=0
+: ${csv=%csv%}
+: ${tumor=%tumor%}
+: ${dll=%dll%}
+: ${dotnet=dotnet}
+: ${isCSparse=true}
+
+
+Verbose=0 Config=0 Surrogate=0
+r=$$
 while :
 do case "x$1" in
        x-s) Surrogate=1
@@ -15,31 +21,54 @@ do case "x$1" in
        x-c) Config=1
 	    shift
 	    ;;
+       x-r) shift
+	    case $# in
+		 0) printf >&2 'bio: error: -r needs and argumetn'
+		    exit 1
+		    ;;
+	    esac
+	    r=$1
+	    shift
+	    ;;
        x-h) cat >&2 <<'!'
-Usage: bio [-v] [-c] [-s] k1 mu time
+Usage: bio [-v] [-c] [-s] [--] k1 mu sv nsteps dt [nsteps dt]
 
 MSolve simulation of tumor growth.
 
 Positional arguments:
-  k1                   The growth rate of the tumor, in units of 1/second.
-  mu                   The shear modulus of the tumor, in units of kPa.
-  time                 The timestep to use in the simulation, in units of days.
+  k1                   The growth rate of the tumor, 1/second.
+  mu                   The shear modulus of the tumor, kPa.
+  sv                   Vascular density of a tumor, m^-1.
+  nsteps               Number of steps.
+  dt                   The size of the timestep.
 
 Options:
   -v                   Print verbose output during the simulation.
   -c                   Output the MSolve configuration file and exit.
   -s                   Use a surrogate instead of the full simulation.
+  -r string            ID string to store output (default process ID: $$)
   -h                   Display this help message and exit.
-Environment Variables:
 
-  mph                  The path to the mesh of the simulated domain,
-		       in .mph format.
+Environment Variables (default):
+  mph                  Path to the mesh of the simulated domain, in .mph format (%mph%)
+  csv                  Path to the CSV with initial conditions (%csv%)
+  tumor                Path to the CSV with initial tumor coordinates (%tumor%)
+  isCSparse            Use sparse solver (true)
+  dotnet               dotnet command (dotnet)
+
 Returns:
   The volume of the tumor, in units of cubic millimeters.
+
+Examples:
+  bio 7.52e-11 22.44 7e3 10 1e-2
+  bio 7.52e-11 22.44 7e3 5 1e-2 5 1e-1
 !
 	    exit 2
 	    ;;
-       x-*) printf >&2 'bio: error: unknown option %s' "$1"
+       x--) shift
+	    break
+	    ;;
+       x-*) printf >&2 'bio: error: unknown option %s\n' "$1"
 	    exit 2
 	    ;;
        *) break
@@ -48,87 +77,125 @@ Returns:
 done
 
 case $# in
-    3) k1=$1; mu=$2; time=$3 ;;
-    *) printf >&1 'bio: error: needs three arguments\n'
-       exit 2
-       ;;
-esac
-
-case "$time" in
-    [1-9]*) ;;
-    *) echo 'bio: error: time should be an positive integer' >&2; exit 2;;
+    0|1|2|3|4)
+	printf >&2 'bio: error: too few arguments\n'
+	exit 2
+	;;
+    *) k1=$1; shift; mu=$1; shift; sv=$1; shift;;
 esac
 
 case $Surrogate in
-    1)
-	awk '
+    1) awk '
 	BEGIN {
-	    a = -1.4943643504045041e-07
-	    b = -1.4906646615767147e-07
-	    ab = 5.1441366269052818e-05
-	    c = 1.4200529488187354e-08
-	    d = 3.045568617688782E-6
-	    x = a * '"$k1"' + b * '"$mu"' + ab * '"$k1"' * '"$mu"' + c
-	    printf "%.16e\n", d * x * '"$time"'
-	}'
-	exit
-	;;
-esac
+	  t = 0
+	  for (i = 1; i < ARGC - 1; i += 2) {
+	    n = ARGV[i]
+	    dt = ARGV[i + 1]
+	    for (j = 0; j < n; j++) {
+		t += dt
+		printf("%.16e %.16e\n", t, '$k1' + '$mu' * t + '$sv' * t * t)
+	    }
+	  }
+	}' "$@"
+       ;;
+    0) if ! test -f "$mph"
+       then printf >&2 "bio: error: mesh file '%s' is not found\n" "$mph"
+	    exit 2
+       fi
 
+       if ! test -f "$csv"
+       then printf >&2 "bio: error: CSV file '%s' is not found\n" "$csv"
+	    exit 2
+       fi
 
-if ! test -f "$mph"
-then printf "bio: error: cannot find mesh '%s'\n" "$mph" >&2
-     exit 2
-fi
-c=/tmp/config.$$.xml
-r=/tmp/result.$$.xml
-trap 'rm -f $c $r; exit 2' 1 2 15
-cat <<! > $c
-<MSolve4Korali version="1.0">
-	<Mesh>
-		<File>$mph</File>
-	</Mesh>
-	<Physics type="TumorGrowth">
-		<Time>$time</Time>
-		<Timestep>1</Timestep>
-	</Physics>
-	<Output>
-		<TumorVolume/>
-	</Output>
-	<Parameters>
-		<k1>$k1</k1>
-		<mu>$mu</mu>
-	</Parameters>
-</MSolve4Korali>
-!
+       if ! test -f "$tumor"
+       then printf >&2 "bio: error: tumor coordinates file '%s' is not found\n" "$tumor"
+	    exit 2
+       fi
 
-case $Config in
-    0) if ! command >/dev/null -v ISAAR.MSolve.MSolve4Korali
+       if ! test -f "$dll"
+       then printf >&2 "bio: error: DLL file '%s' is not found\n" "$dll"
+	    exit 2
+       fi
+
+       if ! command >/dev/null -v "$dotnet"
        then
-	   echo 'bio: ISAAR.MSolve.MSolve4Korali command is not avialabe' >&2
+	   printf >&2 'bio: error: dotnet command is not avialabe\n'
 	   exit 2
        fi
+       config=MSolveInput.xml
+       log=MSolveOutput.log
+       output=MSolveOutput-x.xml
+       mkdir -p "$r"
+       cd -- "$r"
+       # trap 'rm -f "$config" "$log" "$output"; exit 2' 1 2 3 6 14 15
+       cat 2>/dev/null <<! > "$config"
+<MSolve4Korali
+    version="1.0">
+  <Mesh>
+    <MeshFile>
+      $mph
+    </MeshFile>
+    <InitialConditionsFile>
+      $csv
+    </InitialConditionsFile>
+    <TumorCoordinatesFile>
+      $tumor
+    </TumorCoordinatesFile>
+  </Mesh>
+  <Physics
+      type="TumorGrowth"
+      isCSparse="$isCSparse">
+    <Timesteps>
+`awk 'BEGIN {
+for (i = 1; i < ARGC - 1; i += 2)
+  printf "      <Timestepgroup steps=\\"%s\\" stepSizeInSeconds=\\"%s\\"/>\n", ARGV[i], ARGV[i + 1]
+}' "$@"`
+    </Timesteps>
+  </Physics>
+  <Output>
+    <TumorVolume/>
+  </Output>
+  <Parameters>
+    <k1>$k1</k1>
+    <mu>$mu</mu>
+    <svHost>7000</svHost>
+    <svTumor>$sv</svTumor>
+  </Parameters>
+</MSolve4Korali>
+!
+       case $? in
+	   0) ;;
+	   *) printf >&1 "bio: fail to write to '%s'\n" "$config"
+	      exit 1
+	      ;;
+       esac
+       case $Config in
+	   0) case $Verbose in
+		  0) "$dotnet" "$dll" 2>/dev/null 1>/dev/null "$config" x ;;
+		  1) "$dotnet" "$dll" "$config" x | tee 1>&2 "$log" ;;
+	      esac
+	      rc=$?
+	      case $rc in
+		  0) if ! test -f "$output"
+		     then printf >&2 "bio: error: cannot find MSolve output '%s'\n" "$output"
+			  exit 2
+		     fi
+	      awk -v RS='\r\n' '
+	   sub(/^		<TumorVolume time="/, "") &&
+	   sub(/<\/TumorVolume>$/, "") &&
+	   sub(/">/, " ")' "$output"
+	      ;;
+		  *) echo Fail ;;
+	      esac
+	      ;;
+	   1) cat "$config"
+	      ;;
+       esac
        case $Verbose in
-	   0) ISAAR.MSolve.MSolve4Korali 2>/dev/null 1>/dev/null $c $r ;;
-	   1) ISAAR.MSolve.MSolve4Korali 1>&2 $c $r ;;
+	   0) # rm -f "$config" "$output"
+	      ;;
        esac
-       rc=$?
-       case $rc in
-	   0)  if ! awk -v RS='\r\n' 'sub(/^[ \t]*<SolutionMsg>/, "") && sub(/<\/SolutionMsg>[ \t]*/, "") && /^Success$/ {exit 1}' $r
-	       then
-		   awk -v RS='\r\n' 'sub(/^[ \t]*<Volume>/, "") && sub(/<\/Volume>[ \t]*/, "")' $r
-	       else
-		   echo Fail
-	       fi
-	       ;;
-	   *) echo Fail ;;
-       esac
-       ;;
-    1) cat $c
+       exit $rc
        ;;
 esac
-case $Verbose in
-    0) rm -f $c $r
-       ;;
-esac
-exit $rc

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MGroup.FEM.ConvectionDiffusion</name>
+    </assembly>
+    <members>
+        <member name="M:MGroup.FEM.ConvectionDiffusion.Isoparametric.ConvectionDiffusionElement2D.BuildShapeFunctionMatrix(System.Double[])">
+            <summary>
+            The shape function matrix is 1-by-n, where n = is the number of shape functions.
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.ConvectionDiffusion.Line.ConvectionDiffusionRod">
+            <summary>
+            ConvectionDiffusion element for unknown variable's transfer along a single direction. Can be used for 1D, 2D and 3D problems. Does not take into
+            account geometric non-linearities.
+            Authors: Orestis Papas, Christodoulou Theofilos.
+            </summary>
+        </member>
+    </members>
+</doc>

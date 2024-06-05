@@ -19,7 +19,7 @@ def plot_upper_triangle(ax, theta, f=None):
             theta[:, i], theta[:, j], marker='o', s=3, alpha=0.5, c=f)
       else:
         ax[i, j].plot(theta[:, i], theta[:, j], '.', markersize=3)
-      ax[i, j].grid(b=True, which='both')
+      ax[i, j].grid(visible=True, which='both')
       ax[i, j].set_xlabel("F"+str(i))
       ax[i, j].set_ylabel("F"+str(j))
 
@@ -34,7 +34,7 @@ def plot_lower_triangle(ax, theta, f=None):
             theta[:, i], theta[:, j], marker='o', s=3, alpha=0.5, c=f)
       else:
         ax[i, j].plot(theta[:, i], theta[:, j], '.', markersize=3)
-      ax[i, j].grid(b=True, which='both')
+      ax[i, j].grid(visible=True, which='both')
       ax[i, j].set_xlabel("F"+str(i))
       ax[i, j].set_ylabel("F"+str(j))
 

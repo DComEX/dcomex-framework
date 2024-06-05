@@ -37,7 +37,7 @@ void Distributed::initialize()
   // If this is a root rank, check whether configuration is correct
   if (isRoot())
   {
-    if (_rankCount < 2) KORALI_LOG_ERROR("Korali Distributed applications require at least 2 MPI ranks to run.\n");
+    if (_rankCount < 2) KORALI_LOG_ERROR("Korali Distributed applications require at least 2 MPI ranks to run (provided %d).\n", _rankCount);
     if (_ranksPerWorker < 1) KORALI_LOG_ERROR("The distributed conduit requires that the ranks per worker is equal or larger than 1, provided: %d\n", _ranksPerWorker);
     if (_engineRanks < 1) KORALI_LOG_ERROR("The distributed conduit requires that the engine ranks is equal or larger than 1, provided: %d\n", _engineRanks);
     if (workerRemainder != 0) KORALI_LOG_ERROR("Korali was instantiated with %lu MPI ranks (minus %lu for the engine), divided into %lu workers. This setup does not provide a perfectly divisible distribution, and %lu unused ranks remain.\n", _rankCount, _engineRanks, _workerCount, workerRemainder);

@@ -1,4 +1,4 @@
-FROM docker.io/nvidia/cuda:11.2.0-cudnn8-devel-ubuntu20.04
+FROM docker.io/nvidia/cuda:11.2.2-cudnn8-devel-ubuntu20.04
 
 ARG MPICH_VERSION=3.1.4
 
@@ -33,9 +33,3 @@ RUN env TZ=Europe/Zurich DEBIAN_FRONTEND=noninteractive \
     python3-pybind11 \
     python3-scipy
 RUN python3 -m pip install mpi4py
-RUN cd /tmp \
-  && wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
-  && dpkg -i packages-microsoft-prod.deb \
-  && rm packages-microsoft-prod.deb \
-  && apt-get update \
-  && apt-get install -y dotnet-sdk-6.0

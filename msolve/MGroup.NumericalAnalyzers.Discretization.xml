@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MGroup.NumericalAnalyzers.Discretization</name>
+    </assembly>
+    <members>
+        <member name="T:MGroup.NumericalAnalyzers.Discretization.NonLinear.ArcLengthAnalyzer">
+            <summary>
+            This class solves the nonlinear system of equations using the arc length method.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Discretization.NonLinear.ArcLengthAnalyzer.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.Solution.ISolver,MGroup.MSolve.AnalysisWorkflow.Providers.INonLinearProvider,System.Int32,System.Int32,System.Int32,System.Double,System.Double,System.Boolean,System.Int32,System.Boolean)">
+            <summary>
+            This class solves the linearized geometrically nonlinear system of equations according to the Arc Length incremental-iterative method.
+            </summary>
+            <param name="algebraicModel">Instance of the algebraic model that will be solved</param>
+            <param name="solver">Instance of the solver that will solve the linear system of equations</param>
+            <param name="provider">Instance of the problem type to be solved</param>
+            <param name="numIncrements">Number of total load increments</param>
+            <param name="maxIterationsPerIncrement">Number of maximum iterations within a load increment</param>
+            <param name="numIterationsForMatrixRebuild">Number of iterations for the rebuild of the siffness matrix within a load increment</param>
+            <param name="residualTolerance">Tolerance for the convergence criterion of the residual forces</param>
+            <param name="shape">Option for the shape of the constraint - 0 for cylindrical, 1 for spherical, intermediate values for elliptic (default : shape = 0)</param>
+            <param name="constConstraint">Option for constant radius of the constraint (default : constConstraint = 'true')</param>
+            <param name="numOfIterations">(only usefull for constConstraint = false) Number of expected iterations within a load increment (default : numOfIterations = 4)</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Discretization.NonLinear.ArcLengthAnalyzer.Solve">
+            <summary>
+            Solves the nonlinear equations and calculates the displacements vector.
+            </summary>
+        </member>
+        <member name="T:MGroup.NumericalAnalyzers.Discretization.NonLinear.DisplacementControlAnalyzer">
+            <summary>
+            This class solves the nonlinear system of equations using the displacement control method
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Discretization.NonLinear.DisplacementControlAnalyzer.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.Solution.ISolver,MGroup.MSolve.AnalysisWorkflow.Providers.INonLinearProvider,System.Int32,System.Int32,System.Int32,System.Double,System.Boolean)">
+            <summary>
+            This class solves the linearized geometrically nonlinear system of equations according to displacement control incremental-iterative method.
+            This only works if there are no nodal loads or any loading condition other than prescribed displacements.
+            </summary>
+            <param name="model">Instance of the model that will be solved</param>
+            <param name="solver">Instance of the solver that will solve the linear system of equations</param>
+            <param name="provider">Instance of the problem type to be solved</param>
+            <param name="subdomainUpdaters">Instance that updates constraints, right-hand-side vector, updates and resets state</param>
+            <param name="numIncrements">Number of total load increments</param>
+            <param name="maxIterationsPerIncrement">Number of maximum iterations within a load increment</param>
+            <param name="numIterationsForMatrixRebuild">Number of iterations for the rebuild of the siffness matrix within a load increment</param>
+            <param name="residualTolerance">Tolerance for the convergence criterion of the residual forces</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Discretization.NonLinear.DisplacementControlAnalyzer.Solve">
+            <summary>
+            Solves the nonlinear equations and calculates the displacements vector
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Discretization.NonLinear.LoadControlAnalyzer.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.Solution.ISolver,MGroup.MSolve.AnalysisWorkflow.Providers.INonLinearProvider,System.Int32,System.Int32,System.Int32,System.Double,System.Boolean)">
+            <summary>
+            This class solves the linearized geoemtrically nonlinear system of equations according to Newton-Raphson's load control incremental-iterative method.
+            </summary>
+            <param name="model">Instance of the model that will be solved</param>
+            <param name="solver">Instance of the solver that will solve the linear system of equations</param>
+            <param name="provider">Instance of the problem type to be solved</param>
+            <param name="subdomainUpdaters">Instance that updates constraints, right-hand-side vector, updates and resets state</param>
+            <param name="numIncrements">Number of total load increments</param>
+            <param name="maxIterationsPerIncrement">Number of maximum iterations within a load increment</param>
+            <param name="numIterationsForMatrixRebuild">Number of iterations for the rebuild of the siffness matrix within a load increment</param>
+            <param name="residualTolerance">Tolerance for the convergence criterion of the residual forces</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Discretization.NonLinear.LoadControlAnalyzer.Solve">
+            <summary>
+            Solves the nonlinear equations and calculates the displacements vector.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Discretization.NonLinear.LoadControlAnalyzer2.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.Solution.ISolver,MGroup.MSolve.AnalysisWorkflow.Providers.INonLinearProvider,System.Int32,System.Int32,System.Int32,System.Double,System.Boolean)">
+            <summary>
+            This class solves the linearized geoemtrically nonlinear system of equations according to Newton-Raphson's load control incremental-iterative method.
+            </summary>
+            <param name="model">Instance of the model that will be solved</param>
+            <param name="solver">Instance of the solver that will solve the linear system of equations</param>
+            <param name="provider">Instance of the problem type to be solved</param>
+            <param name="subdomainUpdaters">Instance that updates constraints, right-hand-side vector, updates and resets state</param>
+            <param name="numIncrements">Number of total load increments</param>
+            <param name="maxIterationsPerIncrement">Number of maximum iterations within a load increment</param>
+            <param name="numIterationsForMatrixRebuild">Number of iterations for the rebuild of the siffness matrix within a load increment</param>
+            <param name="residualTolerance">Tolerance for the convergence criterion of the residual forces</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Discretization.NonLinear.LoadControlAnalyzer2.Solve">
+            <summary>
+            Solves the nonlinear equations and calculates the displacements vector.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Discretization.NonLinear.LoadControlAnalyzer2Tolerance.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.Solution.ISolver,MGroup.MSolve.AnalysisWorkflow.Providers.INonLinearProvider,System.Int32,System.Int32,System.Int32,System.Double,System.Boolean)">
+            <summary>
+            This class solves the linearized geoemtrically nonlinear system of equations according to Newton-Raphson's load control incremental-iterative method.
+            </summary>
+            <param name="model">Instance of the model that will be solved</param>
+            <param name="solver">Instance of the solver that will solve the linear system of equations</param>
+            <param name="provider">Instance of the problem type to be solved</param>
+            <param name="subdomainUpdaters">Instance that updates constraints, right-hand-side vector, updates and resets state</param>
+            <param name="numIncrements">Number of total load increments</param>
+            <param name="maxIterationsPerIncrement">Number of maximum iterations within a load increment</param>
+            <param name="numIterationsForMatrixRebuild">Number of iterations for the rebuild of the siffness matrix within a load increment</param>
+            <param name="residualTolerance">Tolerance for the convergence criterion of the residual forces</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Discretization.NonLinear.LoadControlAnalyzer2Tolerance.Solve">
+            <summary>
+            Solves the nonlinear equations and calculates the displacements vector.
+            </summary>
+        </member>
+    </members>
+</doc>

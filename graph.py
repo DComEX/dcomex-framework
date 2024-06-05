@@ -4,6 +4,7 @@ import random
 import statistics
 import sys
 import follow
+import functools
 
 try:
     import scipy.special
@@ -295,7 +296,14 @@ def langevin(fun, draws, init, dfun, sigma, log=False):
     sys.stderr.write("graph.langevin: accept = %g\n" % (accept / draws))
 
 
-def tmcmc(fun, draws, lo, hi, beta=1, return_evidence=False, trace=False):
+def tmcmc(fun,
+          draws,
+          lo,
+          hi,
+          beta=1,
+          return_evidence=False,
+          trace=False,
+          Random=None):
     """Generates samples from the target distribution using a transitional
     Markov chain Monte Carlo(TMCMC) algorithm.
 
@@ -331,12 +339,13 @@ def tmcmc(fun, draws, lo, hi, beta=1, return_evidence=False, trace=False):
     --------
 
     >>> import numpy as np
-    >>> np.random.seed(123)
+    >>> import random
+    >>> import math
     >>> def log_prob(x):
     ...     return -0.5 * sum(x**2 for x in x)
-    >>> samples = tmcmc(log_prob, 10000, [-5, -5], [5, 5])
-    >>> len(samples)
-    10000
+    >>> samples = tmcmc(log_prob, 10000, [-5, -5], [5, 5], Random=random.Random(12345))
+    >>> math.isclose(samples[-1][0], 0.0835, abs_tol=0.01)
+    True
     >>> np.abs(np.mean(samples, axis=0)) < 0.1
     array([ True,  True])
 
@@ -351,17 +360,15 @@ def tmcmc(fun, draws, lo, hi, beta=1, return_evidence=False, trace=False):
     if scipy == None:
         raise ModuleNotFoundError("tmcm needs scipy")
     if np == None:
-        raise ModuleNotFoundError("tmcm needs nump")
+        raise ModuleNotFoundError("tmcm needs numpy")
+    uniform = random.uniform if Random is None else Random.uniform
     betasq = beta * beta
     eps = 1e-6
     p = 0
     S = 0
     d = len(lo)
-    x = [
-        tuple(random.uniform(l, h) for l, h in zip(lo, hi))
-        for i in range(draws)
-    ]
-    f = np.array([fun(e) for e in x])
+    x = [tuple(uniform(l, h) for l, h in zip(lo, hi)) for i in range(draws)]
+    f = np.fromiter((fun(x) for x in x), dtype=np.dtype("float64"))
     x2 = [[None] * d for i in range(draws)]
     sigma = [[None] * d for i in range(d)]
     f2 = np.empty_like(f)
@@ -406,8 +413,7 @@ def tmcmc(fun, draws, lo, hi, beta=1, return_evidence=False, trace=False):
             xp = tuple(a + b for a, b in zip(x[j], sqrtC @ delta))
             if inside(xp):
                 fp = fun(xp)
-                if fp > f[j] or p * fp > p * f[j] + math.log(
-                        random.uniform(0, 1)):
+                if fp > f[j] or p * fp > p * f[j] + math.log(uniform(0, 1)):
                     x[j] = xp[:]
                     f[j] = fp
                     accept += 1
@@ -459,6 +465,15 @@ def korali(fun,
     samples : list or tuple
            a list of samples, a tuple of (samples, log-evidence), or a
            trace
+    Example
+    -------
+    >>> import graph
+    >>> import math
+    >>> def fun(x):
+    ...     return -x[0]**2 - (x[1] / 2)**2
+    >>> samples, S = graph.korali(fun, 100, [-5, -4], [5, 4], return_evidence=True)
+    >>> len(samples), math.isclose(S, -2.55, abs_tol=0.05)
+    (100, True)
     """
 
     if korali_package == None:

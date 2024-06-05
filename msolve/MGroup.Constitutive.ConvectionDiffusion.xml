@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MGroup.Constitutive.ConvectionDiffusion</name>
+    </assembly>
+    <members>
+        <member name="T:MGroup.Constitutive.ConvectionDiffusion.ConvectionDiffusionDof">
+            <summary>
+            Degree of freedom corresponding to the uknown coefficient at a single point. Implements enum pattern.
+            Authors: Orestis Papas, Christodoulou Theofilos.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.ConvectionDiffusion.ConvectionDiffusionDof.UnknownVariable">
+            <summary>
+            This dof corresponds to the unknown coefficient.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.ConvectionDiffusion.ConvectionDiffusionProperties.#ctor(System.Double,System.Double,System.Double[],System.Double,System.Double)">
+            <summary>
+            Constructs a new material for the purposes of heat transfer applications. 
+            This material is characterized by the following properties: specific heat, thermal conductivity and material density
+            </summary>
+            <param name="capacityCoeff">coefficient of the first time derivative term.</param>
+            <param name="diffusionCoeff">coefficient of the diffusion term.</param>
+            <param name="convectionCoeff">coefficent of the convection term, multiplied by the velocity vector</param>
+            <param name="dependentSourceCoeff">coefficient of the dependent term of the linear source.</param>
+            <param name="independentSourceCoeff">coefficient of the independent term of the linear source.</param>
+        </member>
+        <member name="T:MGroup.Constitutive.ConvectionDiffusion.IConvectionDiffusionProperties">
+            <summary>
+            Contains material properties used for  problems. These are uniform for the whole element and immutable.
+            Authors: Orestis Papas, Christodoulou Theofilos.
+            </summary>
+        </member>
+    </members>
+</doc>

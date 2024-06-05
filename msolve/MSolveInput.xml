@@ -1,0 +1,23 @@
+<MSolve4Korali version="1.0">
+	<Mesh>
+		<MeshFile>Mesh243Tet2Region.mphtxt</MeshFile>
+		<InitialConditionsFile>t_nodes_cmsl_Mesh243.csv</InitialConditionsFile>
+		<TumorCoordinatesFile>t_nodes_cmsl_Mesh243_TumorCoordinates.csv</TumorCoordinatesFile>
+	</Mesh>
+	<Physics type="TumorGrowth" isCSparse="false">
+		<Timesteps>
+			<Timestepgroup steps="200" stepSizeInSeconds="2e-1"/>
+			<Timestepgroup steps="99" stepSizeInSeconds="40"/>
+			<Timestepgroup steps="430" stepSizeInSeconds="2000"/>
+		</Timesteps>
+	</Physics>
+	<Output>
+		<TumorVolume/>
+	</Output>
+	<Parameters>
+		<k1>7.52e-11</k1>
+		<mu>22.44</mu>
+		<svHost>7E3</svHost>
+		<svTumor>15E3</svTumor>
+	</Parameters>
+</MSolve4Korali>
