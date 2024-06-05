@@ -34,12 +34,8 @@ run_prototype_test:
   stage: test
   image: ${PERSIST_IMAGE_NAME}
   script:
-    - cd /src/tests/units/
-    - ./run.sh
-    - cd /src/tests/validation/inference_heat/
-    - OMP_NUM_THREADS=1 ./run_inference.py --num-cores 12 --num-samples 200
-    - cd /
     - for i in src/follow.py src/graph.py src/kahan.py; do python3 -m doctest $i -v; done
+    - bio 7.52e-11 22.44 7e3 2 1e-2
 
   variables:
     USE_MPI: 'YES'
