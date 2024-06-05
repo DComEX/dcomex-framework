@@ -69,7 +69,7 @@ def plot_upper_triangle(ax, theta, lik):
         ax[i, j].plot(theta[:, j], theta[:, i], '.', markersize=1)
       ax[i, j].set_xticklabels([])
       ax[i, j].set_yticklabels([])
-      ax[i, j].grid(b=True, which='both')
+      ax[i, j].grid(visible=True, which='both')
 
 
 #Plot 2d histogram in lower triangle of figure
