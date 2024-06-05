@@ -1,76 +1,80 @@
 #!/usr/bin/awk -f
 
+function get() {
+    for (;;) {
+	if (getline != 1) {
+	    printf "mph2vtk: get failed\n" | "cat >&2"
+	    exit(1)
+	}
+	sub(/#.*/, "")
+	if ($0 !~ /^[ \t]*$/)
+	    break
+    }
+}
+
 BEGIN {
-    mph2vtk["3 tet"] = 10
-    mph2vtk["5 prism"] = 13
-    mph2vtk["3 vtx"] = 1
-    getline
-    getline
-    getline
-    getline
-    major = $1
-    minor = $2
-    getline
-    sub(/#.*/, "")
-    number_of_tags = $1
-    getline
-    getline # tags
-    getline # number_of_types
-    getline
-    getline # types
-    getline
-    getline
-    getline
-    getline # 0 0 1
-    getline # class
-    getline # version
-    getline # sdim
-    getline
-    sub(/#.*/, "")
-    nv = $1
-    getline # lowest mesh vertex index
-    getline
-    getline
-    for (i = 0; i < nv; i++) {
-	getline
+    RS = "\r\n"
+    mph2vtk["3 vtx"] = 1 # VTK_VERTEX
+    mph2vtk["3 edg"] = 3 # VTK_LINE
+    mph2vtk["3 tri"] = 5 # VTK_TRIANGLE
+    mph2vtk["3 tet"] = 10 # VTK_TETRA
+    mph2vtk["5 prism"] = 13 # VTK_WEDGE
+
+    mph2name["3 vtx"] = "VTK_VERTEX"
+    mph2name["3 edg"] = "VTK_LINE"
+    mph2name["3 tri"] = "VTK_TRIANGLE"
+    mph2name["3 tet"] = "VTK_TETRA"
+    mph2name["5 prism"] = "VTK_WEDGE"
+
+    get() # major = $1; minor = $2
+    get() # number_of_tags = $1
+    get() # tags
+    get() # number of types
+    get() # types
+    get() # 0 0 1
+    get() # 4 Mesh
+    get() # version
+    get(); sdim = $1 # sdim
+    if (sdim != 3) {
+	printf "mph2vtk: only sdim = 3 is supported, given '%d'\n", sdim | "cat >&2"
+	exit(1)
+    }
+    get(); nv = $1
+    get()
+    for (i = 0; i < nv + i0; i++) {
+	get()
 	x[i] = $1
 	y[i] = $2
 	z[i] = $3
     }
-    getline
-    getline
-    sub(/#.*/, "")
+    get() # number of element types
     nt = $1
     for (i = 0; i < nt; i++) {
-	getline
-	getline # Type # ...
-	getline
-	getline
-	sub(/#.*/, "")
-	sub(/[\t ]*$/, "")
-	name[i] = $0
-	getline
-	getline
-	getline
-	sub(/#.*/, "")
+	get()
+	name[i] = $1 " " $2
+	if (!(name[i] in mph2vtk)) {
+	    printf "mph2vtk: unknown type name: '%s'\n", name[i] | "cat >&2"
+	    exit(1)
+	}
+	get()
 	np[i] = $1
-	getline
-	sub(/#.*/, "")
+	get()
 	ne[i] = $1
-	getline
 	for (j = 0; j < ne[i]; j++) {
-	    getline
+	    get()
 	    for (k = 0; k < np[i]; k++)
 		element[i, j, k] = $(k + 1)
 	}
-	getline
-	getline
-	sub(/#.*/, "")
+	get()
 	ng[i] = $1
-	getline
-	for (j = 0; j < ng[i]; j++) {
-	    getline
-	}
+	for (j = 0; j < ng[i]; j++)
+	    get()
+    }
+    Ne = 0
+    Nd = 0
+    for (i = 0; i < nt; i++) {
+	Ne += ne[i]
+	Nd += ne[i] * (np[i] + 1)
     }
     print "# vtk DataFile Version 2.0"
     print "mph2vtk"
@@ -79,12 +83,6 @@ BEGIN {
     printf "POINTS %d float\n", nv
     for (i = 0; i < nv; i++)
 	print x[i], y[i], z[i]
-    Ne = 0
-    Nd = 0
-    for (i = 0; i < nt; i++) {
-	Ne += ne[i]
-	Nd += ne[i] * (np[i] + 1)
-    }
     printf "CELLS %d %d\n", Ne, Nd
     for (i = 0; i < nt; i++)
 	for (j = 0; j < ne[i]; j++) {
@@ -99,4 +97,12 @@ BEGIN {
 	for (j = 0; j < ne[i]; j++)
 	    print vtk
     }
+    # statistics
+    printf					\
+	"mph2vtk: number of points: %d\n"	\
+	"mph2vtk: number of cells: %d\n",	\
+	nv, Ne | "cat >&2"
+    for (i = 0; i < nt; i++)
+	printf "mph2vtk: %s: %d\n",
+	    mph2name[name[i]], ne[i] | "cat >&2"
 }
