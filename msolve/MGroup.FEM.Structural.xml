@@ -1,0 +1,304 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MGroup.FEM.Structural</name>
+    </assembly>
+    <members>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement2D">
+            <summary>
+            Represents a continuum finite element for 2D problems. Specific elements (e.g. Quad4, Tri6, ...) can be created using
+            the appropriate <see cref="T:MGroup.MSolve.Numerics.Interpolation.IIsoparametricInterpolation2D"/>, <see cref="T:MGroup.MSolve.Numerics.Integration.Quadratures.IQuadrature2D"/> etc. strategies. The thickness
+            of this element is uniform, therefore it is necessary to use finer meshes to simulate domains with variable thickness.
+            Authors: Serafeim Bakalakos
+            </summary>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.ContinuumElement2D.FindCentroid">
+            <summary>
+            Calculates the coordinates of the centroid of this element.
+            </summary>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.ContinuumElement2D.GetNodalDofs">
+            <summary>
+            The returned structure is a list with as many entries as the number of nodes of this element. Each entry contains 
+            a list with the dofs of the corresponding node. E.g. For node idx = 3, dof idx = 2 the IDof is result[3][2].
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.ContinuumElement2D.UpdateStrainsStressesAtGaussPoints(System.Double[])">
+            <summary>
+            Calculate strains (exx, eyy, 2exy) and stresses (sxx, syy, sxy) at integration points, store them in the materials 
+            and return them (e.g. for postprocessing). The order of the tensors is the same as the order of the integration 
+            points defined by <see cref="P:MGroup.FEM.Structural.Continuum.ContinuumElement2D.QuadratureForStiffness"/>.
+            </summary>
+            <param name="localDisplacements"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.ContinuumElement2D.BuildShapeFunctionMatrix(System.Double[])">
+            <summary>
+            The shape function matrix is 2-by-2n, where n = is the number of shape functions. Row 0 corresponds to dof X, while
+            row 1 to dof Y.
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement2DFactory">
+            <summary>
+            Creates isoparametric continuum elements with uniform thickness. Abstracts the interpolations, integrations,
+            extrapolations and any other strategies that differentiate the elements (e.g. Quad4 from Tri6). It is also very 
+            convenient when the thickness and material properties are the same throughout the whole domain or a region.
+            Authors: Serafeim Bakalakos
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement3D">
+            <summary>
+            Represents a continuum finite element for 3D problems. Specific elements (e.g. Hexa8, Hexa20, ...) can be created using
+            the appropriate <see cref="!:IIsoparametricInterpolation3D_OLD"/>, <see cref="T:MGroup.MSolve.Numerics.Integration.Quadratures.IQuadrature3D"/> etc. strategies. 
+            Authors: Dimitris Tsapetis
+            </summary>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.ContinuumElement3D.FindCentroid">
+            <summary>
+            Calculates the coordinates of the centroid of this element.
+            </summary>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.ContinuumElement3D.BuildDeformationMatrix(MGroup.LinearAlgebra.Matrices.Matrix)">
+            <summary>
+            Assembles the deformation matrix of a solid element.
+            The calculation are based on <see cref="!:https://www.colorado.edu/engineering/CAS/courses.d/AFEM.d/AFEM.Ch08.d/AFEM.Ch08.pdf"/>
+            paragraph 8.4, equation 8.7
+            </summary>
+            <param name="shapeGradients"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.ContinuumElement3D.BuildShapeFunctionMatrix(System.Double[])">
+            <summary>
+            The shape function matrix is 2-by-2n, where n = is the number of shape functions. Row 0 corresponds to dof X, while
+            row 1 to dof Y, etc.
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement3DFactory">
+            <summary>
+            Creates isoparametric continuum 3D elements. Abstracts the interpolations, integrations,
+            extrapolations and any other strategies that differentiate the elements(e.g. Hexa8, Hexa20)
+            It is also very convenient when the material properties are the same throughout the whole domain or a region.
+            Authors: Dimitris Tsapetis
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement3DGrowth">
+            <summary>
+            Continuum finite Element for 3d problems with material and geometric nonlinearities
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement3DGrowthPorous">
+            <summary>
+            Continuum finite Element for 3d problems with material and geometric nonlinearities
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement3DGrowthPorousComsol">
+            <summary>
+            Continuum finite Element for 3d problems with material and geometric nonlinearities
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement3DGrowthPorousComsol2">
+            <summary>
+            Continuum finite Element for 3d problems with material and geometric nonlinearities
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement3DNonLinear">
+            <summary>
+            Continuum finite Element for 3d problems with material and geometric nonlinearities
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement3DNonLinearDefGrad">
+            <summary>
+            Continuum finite Element for 3d problems with material and geometric nonlinearities
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.ContinuumElement3DPorous">
+            <summary>
+            Represents a continuum finite element for 3D problems. Specific elements (e.g. Hexa8, Hexa20, ...) can be created using
+            the appropriate <see cref="!:IIsoparametricInterpolation3D_OLD"/>, <see cref="T:MGroup.MSolve.Numerics.Integration.Quadratures.IQuadrature3D"/> etc. strategies. 
+            Authors: Dimitris Tsapetis
+            </summary>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.ContinuumElement3DPorous.FindCentroid">
+            <summary>
+            Calculates the coordinates of the centroid of this element.
+            </summary>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.ContinuumElement3DPorous.BuildDeformationMatrix(MGroup.LinearAlgebra.Matrices.Matrix)">
+            <summary>
+            Assembles the deformation matrix of a solid element.
+            The calculation are based on <see cref="!:https://www.colorado.edu/engineering/CAS/courses.d/AFEM.d/AFEM.Ch08.d/AFEM.Ch08.pdf"/>
+            paragraph 8.4, equation 8.7
+            </summary>
+            <param name="shapeGradients"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.ContinuumElement3DPorous.BuildShapeFunctionMatrix(System.Double[])">
+            <summary>
+            The shape function matrix is 2-by-2n, where n = is the number of shape functions. Row 0 corresponds to dof X, while
+            row 1 to dof Y, etc.
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Continuum.Hexa8NonLinear">
+            <summary>
+            Continuum finite Element for 3d problems with material and geometric nonlinearities
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:MGroup.FEM.Structural.Continuum.SolidShellEAS7ANS" -->
+        <member name="M:MGroup.FEM.Structural.Continuum.SolidShellEAS7ANS.FindCentroid">
+            <summary>
+            Calculates the coordinates of the centroid of this element.
+            </summary>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.SolidShellEAS7ANS.BuildDeformationMatrix(MGroup.LinearAlgebra.Matrices.Matrix)">
+            <summary>
+            Assembles the deformation matrix of a solid element.
+            The calculation are based on <see cref="!:https://www.colorado.edu/engineering/CAS/courses.d/AFEM.d/AFEM.Ch08.d/AFEM.Ch08.pdf"/>
+            paragraph 8.4, equation 8.7
+            </summary>
+            <param name="shapeGradients"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Continuum.SolidShellEAS7ANS.BuildShapeFunctionMatrix(System.Double[])">
+            <summary>
+            The shape function matrix is 2-by-2n, where n = is the number of shape functions. Row 0 corresponds to dof X, while
+            row 1 to dof Y, etc.
+            </summary>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Helpers.Shell8DirectionVectorUtilities.RotateNodalDirectionVectors(System.Double,System.Double,System.Int32,System.Double[][],System.Double[][])">
+            <summary>
+            Used by cohesive shell elements for now
+            </summary>
+            <param name="ak"></param>
+            <param name="bk"></param>
+            <param name="n_vector"></param>
+            <param name="tU">this will be updated</param>
+            <param name="tUvec">this will be updated</param>
+            
+        </member>
+        <member name="T:MGroup.FEM.Structural.Embedding.CohesiveElementEmbedder">
+            <summary>
+            Appropriate superelement dofenumerator for problems with embedding of <see cref="!:Elements.CohesiveShell8ToHexa20"/> elements.
+            update of the original <see cref="T:MGroup.MSolve.Discretization.Embedding.ElementEmbedder"/> class Authors: Gerasimos Sotiropoulos     
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Embedding.CohesiveShell8ToHexa20">
+            <summary>
+            Cohesive element for modeling of delamination and debonding effects between parts modeled with shell and hexa20 elements.
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="P:MGroup.FEM.Structural.Embedding.CohesiveShell8ToHexa20.ShellElementSide">
+            <summary>
+            Zero denotes bottom surface of the shell element
+            </summary>
+        </member>
+        <member name="F:MGroup.FEM.Structural.Embedding.CohesiveShell8ToHexa20.ox_i_shell_midsurface">
+            <summary>
+            Initial coordinates of shell midsurface nodes
+            </summary>
+        </member>
+        <member name="F:MGroup.FEM.Structural.Embedding.CohesiveShell8ToHexa20.ox_i">
+            <summary>
+            Initial nodel coordinates of 16 node inner cohesive element
+            </summary>
+        </member>
+        <member name="F:MGroup.FEM.Structural.Embedding.CohesiveShell8ToHexa20.x_local">
+            <summary>
+            Unrolled current nodal coordinates of 16 node inner cohesive element
+            </summary>
+        </member>
+        <member name="F:MGroup.FEM.Structural.Embedding.CohesiveShell8ToHexa20.ak_total">
+            <summary>
+            Auxiliary variables for calculating rotations and updating the element's direction vectors.
+            </summary>      
+        </member>
+        <member name="T:MGroup.FEM.Structural.Embedding.EmbeddedCohesiveGrouping">
+            <summary>
+            Appropriate for iplementing embedding kinematic constraints only for some nodes of the embedded element so that bond slip phenomena can be modeled.
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Embedding.EmbeddedCohesiveSubGrouping">
+            <summary>
+            Appropriate for iplementing embedding kinematic constraints only for some nodes of the embedded element so that bond slip phenomena can be modeled.
+            Element specific host groups Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="M:MGroup.FEM.Structural.Line.Beam3DCorotationalAbstract.CalculateConstitutiveStiffness">
+             Calculates the constitutive stiffness of the element.
+            
+             @return The constitutive stiffness
+        </member>
+        <member name="M:MGroup.FEM.Structural.Line.Beam3DCorotationalAbstract.CalculateForcesInGlobalSystem">
+             Calculates the forces in the global coordinate system.
+            
+             @return The forces in the global coordinate system
+        </member>
+        <member name="M:MGroup.FEM.Structural.Line.Beam3DCorotationalAbstract.CalculateForcesInLocalSystem">
+             Calculates the forces in the local coordinate system.
+            
+             @return The forces in the local coordinate system
+        </member>
+        <member name="M:MGroup.FEM.Structural.Line.Beam3DCorotationalAbstract.CalculateForcesInNaturalSystem">
+             Calculates forces in the natural coordinate system.
+            
+             @return The forces in the natural coordinate system
+        </member>
+        <member name="M:MGroup.FEM.Structural.Line.Beam3DCorotationalAbstract.CalculateGeometricStiffness">
+             Calculates the geometric stiffness of the element.
+            
+             @return The geometric stiffness
+        </member>
+        <member name="M:MGroup.FEM.Structural.Line.Beam3DCorotationalAbstract.CalculateLocalStiffnessMatrix">
+             Calculates the stiffness matrix in the local coordinate system.
+            
+             @return The stiffness matrix in the local coordinate system.
+        </member>
+        <member name="M:MGroup.FEM.Structural.Line.Beam3DCorotationalAbstract.CalculateNaturalToGlobalTransormMatrix">
+             Calculates the transformation matrix from natural to local coordinate system.
+            
+             @return The natural to local transformation matrix
+        </member>
+        <member name="M:MGroup.FEM.Structural.Line.Beam3DCorotationalAbstract.CalculateNaturalToLocalTranformMatrix">
+             Calculates the transformation matrix from natural to local coordinate system.
+            
+             @return The natural to local transformation matrix
+        </member>
+        <member name="M:MGroup.FEM.Structural.Line.Beam3DCorotationalQuaternion.#ctor(System.Collections.Generic.IReadOnlyList{MGroup.MSolve.Discretization.Entities.INode},System.Double,System.Double,System.Double,MGroup.Constitutive.Structural.Line.BeamSection3D)">
+             Creates a new instance of {@link Beam3DCorotationalIncremental} class.
+            
+             @param nodes
+                        The element nodes
+             @param material
+                        The element material
+             @param density
+                        The element density
+             @param beamSection
+                        The beam section.
+        </member>
+        <member name="M:MGroup.FEM.Structural.Line.Rod2D.CalculateAxialStress(System.Double[],System.Double[])">
+            <summary>
+            Stress0         Stress1
+            -> ------------ ->
+            </summary>
+            <param name="element"></param>
+            <param name="localDisplacements"></param>
+            <param name="local_d_Displacements"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MGroup.FEM.Structural.Shells.Shell8NonLinear">
+            <summary>
+            Shell elements for 3d problems with material and geometric nonlinearities. Out of plane shear deformation of the modeled shell structure is assumpted.
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+    </members>
+</doc>

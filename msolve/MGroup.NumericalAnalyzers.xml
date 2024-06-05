@@ -1,0 +1,721 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MGroup.NumericalAnalyzers</name>
+    </assembly>
+    <members>
+        <member name="T:MGroup.NumericalAnalyzers.Dynamic.BDFDynamicAnalyzer">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to the Backward Differentiation Formula
+            Authors: Orestis Papas, Theofilos Christodoulou
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.BDFDynamicAnalyzer.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.AnalysisWorkflow.Providers.ITransientAnalysisProvider,MGroup.MSolve.AnalysisWorkflow.IChildAnalyzer,System.Double,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Creates an instance that uses a specific problem type and an appropriate child analyzer for the construction of the system of equations arising from the actual physical problem
+            </summary>
+            <param name="model">Instance of the model to be solved</param>
+            <param name="provider">Instance of the problem type to be solver</param>
+            <param name="childAnalyzer">Instance of the child analyzer that will handle the solution of the system of equations</param>
+            <param name="timeStep">Instance of the time step of the method that will be initialized</param>
+            <param name="totalTime">Instance of the total time of the method that will be initialized</param>
+            <param name="bdfOrder">Order of the scheme [1,5]</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.BDFDynamicAnalyzer.MGroup#MSolve#AnalysisWorkflow#IStepwiseAnalyzer#Solve">
+            <summary>
+            Solves the linear system of equations of the current timestep
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.BDFDynamicAnalyzer.BuildMatrices">
+            <summary>
+            Makes the proper solver-specific initializations before the solution of the linear system of equations. This method MUST be called before the actual solution of the aforementioned system
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.BDFDynamicAnalyzer.GetOtherRhsComponents(MGroup.MSolve.Solution.LinearSystem.IGlobalVector)">
+            <summary>
+            Calculates inertia forces and damping forces.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.BDFDynamicAnalyzer.Initialize(System.Boolean)">
+            <summary>
+            Initializes the models, the solvers, child analyzers, builds the matrices, assigns loads and initializes right-hand-side vectors.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.BDFDynamicAnalyzer.Solve">
+            <summary>
+            Solves the linear system of equations by calling the corresponding method of the specific solver attached during construction of the current instance
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.BDFDynamicAnalyzer.CalculateRhsImplicit(System.Double)">
+            <summary>
+            Calculates the right-hand-side of the implicit dyanmic method. This will be used for the solution of the linear dynamic system.
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.beta">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Generalized alpha method
+            Authors: George Stavroulakis
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.gamma">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Generalized alpha method
+            Authors: George Stavroulakis
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.timeStep">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Generalized alpha method
+            Authors: George Stavroulakis
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.currentStep">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Generalized alpha method
+            Authors: George Stavroulakis
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.AnalysisWorkflow.Providers.ITransientAnalysisProvider,MGroup.MSolve.AnalysisWorkflow.IChildAnalyzer,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Int32,System.Boolean)">
+            <summary>
+            Creates an instance that uses a specific problem type and an appropriate child analyzer for the construction of the system of equations arising from the actual physical problem
+            </summary>
+            <param name="model">Instance of the model to be solved</param>
+            <param name="provider">Instance of the problem type to be solver</param>
+            <param name="childAnalyzer">Instance of the child analyzer that will handle the solution of the system of equations</param>
+            <param name="timeStep">Instance of the time step of the method that will be initialized</param>
+            <param name="totalTime">Instance of the total time of the method that will be initialized</param>
+            <param name="alpha">Instance of parameter "alpha" of the method that will be initialized</param>
+            <param name="delta">Instance of parameter "delta" of the method that will be initialized</param>
+            <param name="currentStep">Starts the analysis from step equal to this parameter</param>
+            <param name="calculateInitialDerivativeVectors">Set to false to skip initial condition calculation based on initial values (default is true)</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.BuildMatrices">
+            <summary>
+            Makes the proper solver-specific initializations before the solution of the linear system of equations. This method MUST be called before the actual solution of the aforementioned system
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.GetOtherRhsComponents(MGroup.MSolve.Solution.LinearSystem.IGlobalVector)">
+            <summary>
+            Calculates equivalent right-hand side for first- and second-order time derivatives for use in non-linear solvers.
+            Returns zero vector if transient analysis phase is TransientAnalysisPhase.InitialConditionEvaluation.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.Initialize(System.Boolean)">
+            <summary>
+            Initializes the models, the solvers, child analyzers, builds the matrices, solves for initial values and initializes right-hand-side vectors.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.Solve">
+            <summary>
+            Perform the transient analysis by employing the assigned child analyzer for every timestep.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.CalculateRhsImplicit">
+            <summary>
+            Calculates the right-hand-side of the implicit dyanmic method. This will be used for the solution of the linear dynamic system.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.MGroup#MSolve#AnalysisWorkflow#IStepwiseAnalyzer#Solve">
+            <summary>
+            Solves the linear system of equations of the current timestep
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.Builder.SetNewmarkParameters(System.Double,System.Double,System.Boolean)">
+             <summary>
+            
+             </summary>
+             <param name="beta">
+             Used in the intepolation between the accelerations of the previous and current time step, in order to obtain the
+             current displacements. Also called alpha by Bathe.
+             </param>
+             <param name="gamma">
+             Used in the intepolation between the accelerations of the previous and current time step, in order to obtain the
+             current velocities. Also called delta by Bathe.
+             </param>
+             <param name="allowConditionallyStable">
+             If set to true, the user must make sure that the time step chosen is lower than the critical step size
+             corresponding to these particular <paramref name="beta"/>, <paramref name="gamma"/> parameters.
+             </param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.Builder.SetNewmarkParametersForCentralDifferences">
+            <summary>
+            Central diffences: gamma = 1/2, beta = 0. Newmark results in central diffences, a conditionally stable explicit
+            method. To ensure stability, the time step must be &lt;= the critical step size = 2 / w,  where w is the maximum
+            natural radian frequency. It would be more efficient to use an explicit dynamic analyzer.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.Builder.SetNewmarkParametersForConstantAcceleration">
+            <summary>
+            Constant acceleration (also called average acceleration or trapezoid rule): gamma = 1/2, beta = 1/4.
+            This is the most common scheme and is unconditionally stable. In this analyzer, it is used as the default.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzer.Builder.SetNewmarkParametersForLinearAcceleration">
+            <summary>
+            Linear acceleration: gamma = 1/2, beta = 1/6. This is more accurate than the default constant acceleration,
+            but it conditionally stable. To ensure stability, the time step must be &lt;= the critical step size = 3.464 / w
+            = 0.551 * T, where w is the maximum natural radian frequency and T is the minimum natural period.
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.beta">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Generalized alpha method
+            Authors: George Stavroulakis
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.gamma">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Generalized alpha method
+            Authors: George Stavroulakis
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.timeStep">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Generalized alpha method
+            Authors: George Stavroulakis
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.currentStep">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Generalized alpha method
+            Authors: George Stavroulakis
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.AnalysisWorkflow.Providers.INonLinearTransientAnalysisProvider,MGroup.MSolve.AnalysisWorkflow.IChildAnalyzer,System.Double,System.Double,System.Double,System.Double,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            Creates an instance that uses a specific problem type and an appropriate child analyzer for the construction of the system of equations arising from the actual physical problem
+            </summary>
+            <param name="model">Instance of the model to be solved</param>
+            <param name="provider">Instance of the problem type to be solver</param>
+            <param name="childAnalyzer">Instance of the child analyzer that will handle the solution of the system of equations</param>
+            <param name="timeStep">Instance of the time step of the method that will be initialized</param>
+            <param name="totalTime">Instance of the total time of the method that will be initialized</param>
+            <param name="alpha">Instance of parameter "alpha" of the method that will be initialized</param>
+            <param name="delta">Instance of parameter "delta" of the method that will be initialized</param>
+            <param name="currentStep">Starts the analysis from step equal to this parameter</param>
+            <param name="calculateInitialDerivativeVectors">Set to false to skip initial condition calculation based on initial values (default is true)</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.BuildMatrices">
+            <summary>
+            Makes the proper solver-specific initializations before the solution of the linear system of equations. This method MUST be called before the actual solution of the aforementioned system
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.GetOtherRhsComponents(MGroup.MSolve.Solution.LinearSystem.IGlobalVector)">
+            <summary>
+            Calculates equivalent right-hand side for first- and second-order time derivatives for use in non-linear solvers.
+            Returns zero vector if transient analysis phase is TransientAnalysisPhase.InitialConditionEvaluation.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.Initialize(System.Boolean)">
+            <summary>
+            Initializes the models, the solvers, child analyzers, builds the matrices, solves for initial values and initializes right-hand-side vectors.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.Solve">
+            <summary>
+            Perform the transient analysis by employing the assigned child analyzer for every timestep.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.CalculateRhsImplicit">
+            <summary>
+            Calculates the right-hand-side of the implicit dyanmic method. This will be used for the solution of the linear dynamic system.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.MGroup#MSolve#AnalysisWorkflow#IStepwiseAnalyzer#Solve">
+            <summary>
+            Solves the linear system of equations of the current timestep
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.Builder.SetNewmarkParameters(System.Double,System.Double,System.Boolean)">
+             <summary>
+            
+             </summary>
+             <param name="beta">
+             Used in the intepolation between the accelerations of the previous and current time step, in order to obtain the
+             current displacements. Also called alpha by Bathe.
+             </param>
+             <param name="gamma">
+             Used in the intepolation between the accelerations of the previous and current time step, in order to obtain the
+             current velocities. Also called delta by Bathe.
+             </param>
+             <param name="allowConditionallyStable">
+             If set to true, the user must make sure that the time step chosen is lower than the critical step size
+             corresponding to these particular <paramref name="beta"/>, <paramref name="gamma"/> parameters.
+             </param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.Builder.SetNewmarkParametersForCentralDifferences">
+            <summary>
+            Central diffences: gamma = 1/2, beta = 0. Newmark results in central diffences, a conditionally stable explicit
+            method. To ensure stability, the time step must be &lt;= the critical step size = 2 / w,  where w is the maximum
+            natural radian frequency. It would be more efficient to use an explicit dynamic analyzer.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.Builder.SetNewmarkParametersForConstantAcceleration">
+            <summary>
+            Constant acceleration (also called average acceleration or trapezoid rule): gamma = 1/2, beta = 1/4.
+            This is the most common scheme and is unconditionally stable. In this analyzer, it is used as the default.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.GeneralizedAlphaDynamicAnalyzerV2.Builder.SetNewmarkParametersForLinearAcceleration">
+            <summary>
+            Linear acceleration: gamma = 1/2, beta = 1/6. This is more accurate than the default constant acceleration,
+            but it conditionally stable. To ensure stability, the time step must be &lt;= the critical step size = 3.464 / w
+            = 0.551 * T, where w is the maximum natural radian frequency and T is the minimum natural period.
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.beta">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Newmark method
+            Authors: George Stavroulakis, George Soimiris
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.gamma">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Newmark method
+            Authors: George Stavroulakis, George Soimiris
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.timeStep">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Newmark method
+            Authors: George Stavroulakis, George Soimiris
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.currentStep">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Newmark method
+            Authors: George Stavroulakis, George Soimiris
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.AnalysisWorkflow.Providers.ITransientAnalysisProvider,MGroup.MSolve.AnalysisWorkflow.IChildAnalyzer,System.Double,System.Double,System.Double,System.Double,System.Int32,System.Boolean)">
+            <summary>
+            Creates an instance that uses a specific problem type and an appropriate child analyzer for the construction of the system of equations arising from the actual physical problem
+            </summary>
+            <param name="model">Instance of the model to be solved</param>
+            <param name="provider">Instance of the problem type to be solver</param>
+            <param name="childAnalyzer">Instance of the child analyzer that will handle the solution of the system of equations</param>
+            <param name="timeStep">Instance of the time step of the method that will be initialized</param>
+            <param name="totalTime">Instance of the total time of the method that will be initialized</param>
+            <param name="alpha">Instance of parameter "alpha" of the method that will be initialized</param>
+            <param name="delta">Instance of parameter "delta" of the method that will be initialized</param>
+            <param name="currentStep">Starts the analysis from step equal to this parameter</param>
+            <param name="calculateInitialDerivativeVectors">Set to false to skip initial condition calculation based on initial values (default is true)</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.BuildMatrices">
+            <summary>
+            Makes the proper solver-specific initializations before the solution of the linear system of equations. This method MUST be called before the actual solution of the aforementioned system
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.GetOtherRhsComponents(MGroup.MSolve.Solution.LinearSystem.IGlobalVector)">
+            <summary>
+            Calculates equivalent right-hand side for first- and second-order time derivatives for use in non-linear solvers.
+            Returns zero vector if transient analysis phase is TransientAnalysisPhase.InitialConditionEvaluation.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.Initialize(System.Boolean)">
+            <summary>
+            Initializes the models, the solvers, child analyzers, builds the matrices, solves for initial values and initializes right-hand-side vectors.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.Solve">
+            <summary>
+            Perform the transient analysis by employing the assigned child analyzer for every timestep.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.CalculateRhsImplicit">
+            <summary>
+            Calculates the right-hand-side of the implicit dyanmic method. This will be used for the solution of the linear dynamic system.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.MGroup#MSolve#AnalysisWorkflow#IStepwiseAnalyzer#Solve">
+            <summary>
+            Solves the linear system of equations of the current timestep
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.Builder.SetNewmarkParameters(System.Double,System.Double,System.Boolean)">
+             <summary>
+            
+             </summary>
+             <param name="beta">
+             Used in the intepolation between the accelerations of the previous and current time step, in order to obtain the
+             current displacements. Also called alpha by Bathe.
+             </param>
+             <param name="gamma">
+             Used in the intepolation between the accelerations of the previous and current time step, in order to obtain the
+             current velocities. Also called delta by Bathe.
+             </param>
+             <param name="allowConditionallyStable">
+             If set to true, the user must make sure that the time step chosen is lower than the critical step size
+             corresponding to these particular <paramref name="beta"/>, <paramref name="gamma"/> parameters.
+             </param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.Builder.SetNewmarkParametersForCentralDifferences">
+            <summary>
+            Central diffences: gamma = 1/2, beta = 0. Newmark results in central diffences, a conditionally stable explicit
+            method. To ensure stability, the time step must be &lt;= the critical step size = 2 / w,  where w is the maximum
+            natural radian frequency. It would be more efficient to use an explicit dynamic analyzer.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.Builder.SetNewmarkParametersForConstantAcceleration">
+            <summary>
+            Constant acceleration (also called average acceleration or trapezoid rule): gamma = 1/2, beta = 1/4.
+            This is the most common scheme and is unconditionally stable. In this analyzer, it is used as the default.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzer.Builder.SetNewmarkParametersForLinearAcceleration">
+            <summary>
+            Linear acceleration: gamma = 1/2, beta = 1/6. This is more accurate than the default constant acceleration,
+            but it conditionally stable. To ensure stability, the time step must be &lt;= the critical step size = 3.464 / w
+            = 0.551 * T, where w is the maximum natural radian frequency and T is the minimum natural period.
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.beta">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Newmark method
+            Authors: George Stavroulakis, George Soimiris
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.gamma">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Newmark method
+            Authors: George Stavroulakis, George Soimiris
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.timeStep">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Newmark method
+            Authors: George Stavroulakis, George Soimiris
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.currentStep">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Newmark method
+            Authors: George Stavroulakis, George Soimiris
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.AnalysisWorkflow.Providers.INonLinearTransientAnalysisProvider,MGroup.MSolve.AnalysisWorkflow.IChildAnalyzer,System.Double,System.Double,System.Double,System.Double,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            Creates an instance that uses a specific problem type and an appropriate child analyzer for the construction of the system of equations arising from the actual physical problem
+            </summary>
+            <param name="model">Instance of the model to be solved</param>
+            <param name="provider">Instance of the problem type to be solver</param>
+            <param name="childAnalyzer">Instance of the child analyzer that will handle the solution of the system of equations</param>
+            <param name="timeStep">Instance of the time step of the method that will be initialized</param>
+            <param name="totalTime">Instance of the total time of the method that will be initialized</param>
+            <param name="alpha">Instance of parameter "alpha" of the method that will be initialized</param>
+            <param name="delta">Instance of parameter "delta" of the method that will be initialized</param>
+            <param name="currentStep">Starts the analysis from step equal to this parameter</param>
+            <param name="calculateInitialDerivativeVectors">Set to false to skip initial condition calculation based on initial values (default is true)</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.BuildMatrices">
+            <summary>
+            Makes the proper solver-specific initializations before the solution of the linear system of equations. This method MUST be called before the actual solution of the aforementioned system
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.GetOtherRhsComponents(MGroup.MSolve.Solution.LinearSystem.IGlobalVector)">
+            <summary>
+            Calculates equivalent right-hand side for first- and second-order time derivatives for use in non-linear solvers.
+            Returns zero vector if transient analysis phase is TransientAnalysisPhase.InitialConditionEvaluation.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.Initialize(System.Boolean)">
+            <summary>
+            Initializes the models, the solvers, child analyzers, builds the matrices, solves for initial values and initializes right-hand-side vectors.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.Solve">
+            <summary>
+            Perform the transient analysis by employing the assigned child analyzer for every timestep.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.CalculateRhsImplicit">
+            <summary>
+            Calculates the right-hand-side of the implicit dyanmic method. This will be used for the solution of the linear dynamic system.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.MGroup#MSolve#AnalysisWorkflow#IStepwiseAnalyzer#Solve">
+            <summary>
+            Solves the linear system of equations of the current timestep
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.Builder.SetNewmarkParameters(System.Double,System.Double,System.Boolean)">
+             <summary>
+            
+             </summary>
+             <param name="beta">
+             Used in the intepolation between the accelerations of the previous and current time step, in order to obtain the
+             current displacements. Also called alpha by Bathe.
+             </param>
+             <param name="gamma">
+             Used in the intepolation between the accelerations of the previous and current time step, in order to obtain the
+             current velocities. Also called delta by Bathe.
+             </param>
+             <param name="allowConditionallyStable">
+             If set to true, the user must make sure that the time step chosen is lower than the critical step size
+             corresponding to these particular <paramref name="beta"/>, <paramref name="gamma"/> parameters.
+             </param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.Builder.SetNewmarkParametersForCentralDifferences">
+            <summary>
+            Central diffences: gamma = 1/2, beta = 0. Newmark results in central diffences, a conditionally stable explicit
+            method. To ensure stability, the time step must be &lt;= the critical step size = 2 / w,  where w is the maximum
+            natural radian frequency. It would be more efficient to use an explicit dynamic analyzer.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.Builder.SetNewmarkParametersForConstantAcceleration">
+            <summary>
+            Constant acceleration (also called average acceleration or trapezoid rule): gamma = 1/2, beta = 1/4.
+            This is the most common scheme and is unconditionally stable. In this analyzer, it is used as the default.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.NewmarkDynamicAnalyzerV2.Builder.SetNewmarkParametersForLinearAcceleration">
+            <summary>
+            Linear acceleration: gamma = 1/2, beta = 1/6. This is more accurate than the default constant acceleration,
+            but it conditionally stable. To ensure stability, the time step must be &lt;= the critical step size = 3.464 / w
+            = 0.551 * T, where w is the maximum natural radian frequency and T is the minimum natural period.
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer.timeStep">
+            <summary>
+            This class implements a Pseudo-Transient Analyzer
+            Authors: George Stavroulakis, Theofilos Christodoulou.
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer.totalTime">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Newmark method
+            Authors: George Stavroulakis, Theofilos Christodoulou.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.AnalysisWorkflow.Providers.ITransientAnalysisProvider,MGroup.MSolve.AnalysisWorkflow.IChildAnalyzer,System.Double,System.Double,System.Int32)">
+            <summary>
+            Creates an instance that uses a specific problem type and an appropriate child analyzer for the construction of the system of equations arising from the actual physical problem.
+            </summary>
+            <param name="model">Instance of the model to be solved.</param>
+            <param name="provider">Instance of the problem type to be solver.</param>
+            <param name="childAnalyzer">Instance of the child analyzer that will handle the solution of the system of equations.</param>
+            <param name="timeStep">Instance of the time step of the method that will be initialized.</param>
+            <param name="totalTime">Instance of the total time of the method that will be initialized.</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer.BuildMatrices">
+            <summary>
+            Makes the proper solver-specific initializations before the solution of the linear system of equations. This method MUST be called before the actual solution of the aforementioned system
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer.GetOtherRhsComponents(MGroup.MSolve.Solution.LinearSystem.IGlobalVector)">
+            <summary>
+            Calculates inertia forces and damping forces.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer.Initialize(System.Boolean)">
+            <summary>
+            Initializes the models, the solvers, child analyzers, builds the matrices, assigns loads and initializes right-hand-side vectors.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer.Solve">
+            <summary>
+            Solves the linear system of equations by calling the corresponding method of the specific solver attached during construction of the current instance
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer.CalculateRhsImplicit">
+            <summary>
+            Calculates the right-hand-side of the implicit dyanmic method. This will be used for the solution of the linear dynamic system.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer.MGroup#MSolve#AnalysisWorkflow#IStepwiseAnalyzer#Solve">
+            <summary>
+            Solves the linear system of equations of the current timestep
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer2.timeStep">
+            <summary>
+            This class implements a Pseudo-Transient Analyzer
+            Authors: George Stavroulakis, Theofilos Christodoulou.
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer2.totalTime">
+            <summary>
+            This class makes the appropriate arrangements for the solution of linear dynamic equations
+            according to implicit Newmark method
+            Authors: George Stavroulakis, Theofilos Christodoulou.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer2.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.AnalysisWorkflow.Providers.ITransientAnalysisProvider,MGroup.MSolve.AnalysisWorkflow.IChildAnalyzer,System.Double,System.Double,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Creates an instance that uses a specific problem type and an appropriate child analyzer for the construction of the system of equations arising from the actual physical problem.
+            </summary>
+            <param name="model">Instance of the model to be solved.</param>
+            <param name="provider">Instance of the problem type to be solver.</param>
+            <param name="childAnalyzer">Instance of the child analyzer that will handle the solution of the system of equations.</param>
+            <param name="timeStep">Instance of the time step of the method that will be initialized.</param>
+            <param name="totalTime">Instance of the total time of the method that will be initialized.</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer2.BuildMatrices">
+            <summary>
+            Makes the proper solver-specific initializations before the solution of the linear system of equations. This method MUST be called before the actual solution of the aforementioned system
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer2.GetOtherRhsComponents(MGroup.MSolve.Solution.LinearSystem.IGlobalVector)">
+            <summary>
+            Calculates inertia forces and damping forces.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer2.Initialize(System.Boolean)">
+            <summary>
+            Initializes the models, the solvers, child analyzers, builds the matrices, assigns loads and initializes right-hand-side vectors.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer2.Solve">
+            <summary>
+            Solves the linear system of equations by calling the corresponding method of the specific solver attached during construction of the current instance
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer2.CalculateRhsImplicit">
+            <summary>
+            Calculates the right-hand-side of the implicit dyanmic method. This will be used for the solution of the linear dynamic system.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Dynamic.PseudoTransientAnalyzer2.MGroup#MSolve#AnalysisWorkflow#IStepwiseAnalyzer#Solve">
+            <summary>
+            Solves the linear system of equations of the current timestep
+            </summary>
+        </member>
+        <member name="T:MGroup.NumericalAnalyzers.LinearAnalyzer">
+            <summary>
+            This class solves the linear system.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.LinearAnalyzer.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.Solution.ISolver,MGroup.MSolve.AnalysisWorkflow.Providers.IAnalyzerProvider)">
+            <summary>
+            This class defines the linear anaylzer.
+            </summary>
+            <param name="algebraicModel">Instance of the algebraic model that will be solved</param>
+            <param name="solver">Instance of the solver that will solve the linear system of equations</param>
+            <param name="provider">Instance of the problem type to be solved</param> 
+        </member>
+        <member name="T:MGroup.NumericalAnalyzers.Logging.ConstrainedDofForcesCalculator">
+            <summary>
+            This does not work if the requested node belongs to an element that contains embedded elements.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Logging.ConstrainedDofForcesCalculator.FindLocalDofIndex(MGroup.MSolve.Discretization.IElementType,MGroup.MSolve.Discretization.Entities.INode,MGroup.MSolve.Discretization.Dofs.IDofType)">
+            <summary>
+            Returns -1 if the element does not engage the requested <see cref="T:MGroup.MSolve.Discretization.Dofs.IDofType"/>
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Logging.IncrementalDisplacementsLog.#ctor(System.Collections.Generic.IList{System.ValueTuple{MGroup.MSolve.Discretization.Entities.INode,MGroup.MSolve.Discretization.Dofs.IDofType}},MGroup.MSolve.Solution.AlgebraicModel.IVectorValueExtractor)">
+            <summary>
+            Initializes a new instance of <see cref="T:MGroup.NumericalAnalyzers.Logging.IncrementalDisplacementsLog"/>.
+            </summary>
+            <param name="watchDofs">Which freedom degrees to track for each subdomain.</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Logging.TotalDisplacementsPerIterationLog.#ctor(System.Collections.Generic.IList{System.ValueTuple{MGroup.MSolve.Discretization.Entities.INode,MGroup.MSolve.Discretization.Dofs.IDofType}},MGroup.MSolve.Solution.AlgebraicModel.IVectorValueExtractor)">
+            <summary>
+            Initializes a new instance of <see cref="T:MGroup.NumericalAnalyzers.Logging.TotalDisplacementsPerIterationLog"/>.
+            </summary>
+            <param name="watchDofs">Which freedom degrees to track for each subdomain.</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Logging.TotalDisplacementsPerIterationLog.StoreDisplacements(MGroup.MSolve.Solution.LinearSystem.IGlobalVector)">
+            <summary>
+            Stores the total displacements = u_converged + du, for a new iteration.
+            </summary>
+            <param name="totalDisplacements">The total displacements for each subdomain.</param>
+        </member>
+        <member name="T:MGroup.NumericalAnalyzers.Logging.TotalLoadsDisplacementsPerIncrementLog">
+            <summary>
+            This does not work if the requested node belongs to an element that contains embedded elements.
+            </summary>
+        </member>
+        <member name="F:MGroup.NumericalAnalyzers.Logging.TotalLoadsDisplacementsPerIncrementLog.currentTotalDisplacement">
+            <summary>
+            In case of displacement control, where there is a prescribed displacement at the monitored dof, we can only
+            access the applied displacement which is scaled to 1/loadSteps at the beginning and remains constant during the iterations.
+            Therefore we need to keep track of the previous displacements. This only happens for constrained dofs. 
+            For free dofs this field is not used.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Logging.TotalLoadsDisplacementsPerIncrementLog.Initialize">
+            <summary>
+            Writes the header.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Logging.TotalLoadsDisplacementsPerIncrementLog.LogTotalDataForIncrement(System.Int32,System.Int32,System.Double,MGroup.MSolve.Solution.LinearSystem.IGlobalVector,MGroup.MSolve.Solution.LinearSystem.IGlobalVector)">
+            <summary>
+            This also writes to the output file.
+            </summary>
+            <param name="totalDisplacements">
+            The total displacements (start till current iteration of current increment) of the subdomain.
+            </param>
+            <param name="totalInternalForces">
+            The total internal right hand side forces (start till current iteration of current increment) of the subdomain.
+            </param>
+        </member>
+        <member name="T:MGroup.NumericalAnalyzers.NonLinear.NonLinearAnalyzerBase">
+            <summary>
+            This class represents the base class of all nonlinear anaylsers and contains the basic information necessary for other analyzers
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.NonLinear.NonLinearAnalyzerBase.Initialize(System.Boolean)">
+            <summary>
+            Initializes internal vector before the first analysis.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.NonLinear.NonLinearAnalyzerBase.Solve">
+            <summary>
+            This class solves system and calculates the displacements vector.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.Staggered.StaggeredAnalyzerBase.Initialize(System.Boolean)">
+            <summary>
+            Initializes the values of the system to be solved.
+            </summary>
+        </member>
+        <member name="T:MGroup.NumericalAnalyzers.StaticAnalyzer">
+            <summary>
+            This class solves static problems.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.StaticAnalyzer.#ctor(MGroup.MSolve.Solution.AlgebraicModel.IAlgebraicModel,MGroup.MSolve.AnalysisWorkflow.Providers.INonTransientAnalysisProvider,MGroup.MSolve.AnalysisWorkflow.IChildAnalyzer)">
+            <summary>
+            This class defines the static analyzer.
+            </summary>
+            <param name="algebraicModel">Instance of the algebraic model that will be solved</param>
+            <param name="solver">Instance of the solver that will solve the linear system of equations</param>
+            <param name="provider">Instance of the problem type to be solved</param> 
+            <param name="childAnalyzer">Instance of the child analyzer that defines whether the problem is linear or nonlinear</param>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.StaticAnalyzer.BuildMatrices">
+            <summary>
+            Builds the stiffness matrix of the structure.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.StaticAnalyzer.Initialize(System.Boolean)">
+            <summary>
+            Initializes the values of the system to be solved.
+            </summary>
+        </member>
+        <member name="M:MGroup.NumericalAnalyzers.StaticAnalyzer.Solve">
+            <summary>
+            Solves the system and calculates the displacement vector.
+            </summary>
+        </member>
+    </members>
+</doc>

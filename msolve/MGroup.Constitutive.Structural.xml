@@ -1,0 +1,1833 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MGroup.Constitutive.Structural</name>
+    </assembly>
+    <members>
+        <member name="T:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial">
+            <summary>
+            Benzeggagh-Kenane Mixed mode damage propagation criterion. Bilinear traction separation law. 
+            Authors Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.System#ICloneable#Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+            Updates the material state for a given new strain point.
+            </summary>
+            <param name="Delta">The given strain point.</param>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.Tractions">
+            <summary>
+            Returns the tractions of this material for the current strain state.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.ConstitutiveMatrix">
+            <summary>
+            Returns the constitutive matrix of the material for the current strain state
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.CreateState">
+            <summary>
+            Saves the current stress strain state of the material (after convergence of the iterative solution process
+            for a given loading step).
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.ResetModified">
+            <summary>
+            Resets the boolean that indicates if the constitutive matrix of the material has changed for the current iteratively update 
+            of the deformation state.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.ID">
+            <summary>
+            Returns the ID of the material class indicating a specific material law implementation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.ClearState">
+            <summary>
+            Clears the saved stress strain point connected to the last converged analysis step.
+            Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.ClearTractions">
+            <summary>
+            Clears tractions - not a valid operation.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Cohesive.BenzeggaghKenaneCohesiveMaterial.Coordinates">
+            <summary>
+            Returns coordinates. Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial">
+            <summary>
+            cohesion only friction type response in shear separation mode (with kinematic hardening like behaviour). Linear elastic behaviour in normal mode
+            Authors Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double[],System.Double[],System.Double)">
+            <summary>
+            Creates and object of the BondSlipCohMat material class.
+            </summary>
+            <param name="k_elastic">Elastic stifness in the shear direction.</param>
+            <param name="k_elastic2">Tangent stifness after yielding in the shear direction.</param>
+            <param name="k_elastic_normal">Elastic stifness in the normal direction.</param>
+            <param name="t_max">Tield traction.</param>
+            <param name="s_0">Initila traction state values.</param>
+            <param name="a_0">Intial hardening parameter values.</param>
+            <param name="tol">Tolerance for the ued iterative procedure followed for the calculation of the next traction slip point.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double[],System.Double[],System.Double)">
+            <summary>
+            /// Creates and object of the BondSlipCohMat material class.
+            </summary>
+            <param name="T_o_1">Yield traction in the shear direction.</param>
+            <param name="D_o_1">Yield slip in the shear direction.</param>
+            <param name="k_elastic2_ratio">Percentage of the ratio: Elastic stifness in the shear direction/Tangent stifness after yielding in the shear direction.</param>
+            <param name="T_o_3">Ttraction of a characteristic traction slip point in the normal direction.</param>
+            <param name="D_o_3">Slip of a characteristic traction slip point in the normal direction.</param>
+            <param name="s_0">Initila traction state values.</param>
+            <param name="a_0">Intial hardening parameter values.</param>
+            <param name="tol">Tolerance for the ued iterative procedure followed for the calculation of the next traction slip point.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.System#ICloneable#Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+            Updates the material state for a given new strain point.
+            </summary>
+            <param name="Delta">The given strain point.</param>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.Tractions">
+            <summary>
+            Returns the tractions of this material for the current strain state.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.ConstitutiveMatrix">
+            <summary>
+            Returns the constitutive matrix of the material for the current strain state
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.CreateState">
+            <summary>
+            Saves the current stress strain state of the material (after convergence of the iterative solution process
+            for a given loading step).
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.ResetModified">
+            <summary>
+            Resets the boolean that indicates if the constitutive matrix of the material has changed for the current iteratively update 
+            of the deformation state.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.ID">
+            <summary>
+            Returns the ID of the material class indicating a specific material law implementation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.ClearState">
+            <summary>
+            Clears the saved stress strain point connected to the last converged analysis step.
+            Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.ClearTractions">
+            <summary>
+            Clears tractions - not a valid operation.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Cohesive.BondSlipMaterial.Coordinates">
+            <summary>
+            Returns coordinates. Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Cohesive.ICohesiveZoneMaterial">
+            <summary>
+            Interface that traction separation laws implementations should follow
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.DruckerPrager3DNonLinearHardening.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+              Updates the element's material with the provided incremental strains.
+            </summary>
+            <param name = "strainsIncrement">The incremental strains to use for the next step.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.DruckerPrager3DNonLinearHardening.GetSecondStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the second stress invariant (I2).
+            </summary>
+            <returns> The second stress invariant (I2).</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.DruckerPrager3DNonLinearHardening.GetThirdStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the third stress invariant (I3).
+            </summary>
+            <returns> The third stress invariant (I3). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.DruckerPrager3DNonLinearHardening.GetYieldBackSlopeFromPlasticStrain(System.Double,System.Double[0:,0:])">
+            <summary>
+              Calculates the yield/back stress slope of the isotropic/kinematic hardening curve
+            </summary>
+            <returns> The yield stress.</returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D">
+            <summary>
+            It is an implementation of a linear elastic isotropic constitutive law for 3D finite elements.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.ID">
+            <summary>
+            Returns the ID of the material class indicating a specific material law implementation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.IsCurrentStateDifferent">
+            <summary>
+            Returns a boolean indicating if the constitutive matrix of the material has changed for the current iteratively update 
+            of the deformation state.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.ResetModified">
+            <summary>
+            Resets the boolean that indicates if the constitutive matrix of the material has changed for the current iteratively update 
+            of the deformation state.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.Stresses">
+            <summary>
+            Returns the stresses of this material for the current strain state.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.ConstitutiveMatrix">
+            <summary>
+            Returns the constitutive matrix of the material for the current strain state
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+            Updates the material state for a given new strain point.
+            </summary>
+            <param name="Delta">The given strain point.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.ClearState">
+            <summary>
+            Clears the saved stress strain point connected to the last converged analysis step.
+            Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.CreateState">
+            <summary>
+            Saves the current stress strain state of the material (after convergence of the iterative solution process
+            for a given loading step).
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.ClearStresses">
+            <summary>
+            Clears stresses.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.System#ICloneable#Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3D.Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad">
+            <summary>
+            Deformation Gradient based implementation of a linear elastic isotropic material
+            Authors Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.ID">
+            <summary>
+            Returns the ID of the material class indicating a specific material law implementation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.IsCurrentStateDifferent">
+            <summary>
+            Returns a boolean indicating if the constitutive matrix of the material has changed for the current iteratively update 
+            of the deformation state.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.ResetModified">
+            <summary>
+            Resets the boolean that indicates if the constitutive matrix of the material has changed for the current iteratively update 
+            of the deformation state.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.Stresses">
+            <summary>
+            Returns the stresses of this material for the current strain state.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.ConstitutiveMatrix">
+            <summary>
+            Returns the constitutive matrix of the material for the current strain state
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+            Updates the material state for a given new strain point.
+            </summary>
+            <param name="Delta">The given strain point.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.ClearState">
+            <summary>
+            Clears the saved stress strain point connected to the last converged analysis step.
+            Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.CreateState">
+            <summary>
+            Saves the current stress strain state of the material (after convergence of the iterative solution process
+            for a given loading step).
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.ClearStresses">
+            <summary>
+            Clears stresses - Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DDefGrad.System#ICloneable#Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco">
+            <summary>
+              Class for 3D Elastic Visco materials.
+            </summary>
+            <a href = "http://en.wikipedia.org/wiki/Von_Mises_yield_criterion">Wikipedia -Von Mises yield criterion</a>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.PoissonRatioForIncompressibleSolid">
+            <summary>
+              The Poisson ratio value of an incompressible solid.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.TotalStrains">
+            <summary>
+              The total number of strains.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.TotalStresses">
+            <summary>
+              The total number of stresses.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.SupportiveMatrixForConsistentConstitutiveMatrix">
+            <summary>
+              An array needed for the formulation of the consistent constitutive matrix.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.SupportiveMatrixForConsistentConstitutiveMatrixAIdM">
+            <summary>
+              An array needed for the formulation of the consistent constitutive matrix.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.SupportiveMatrixForConsistentConstitutiveMatrixIIM">
+            <summary>
+              An array needed for the formulation of the consistent constitutive matrix.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.SupportiveMatrixForConsistentConstitutiveMatrixI4M">
+            <summary>
+              An array needed for the formulation of the consistent constitutive matrix.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.SupportiveArrayForDeviatoricFormulation">
+            <summary>
+              An array needed for the formulation of deviatoric stress or strain arrays.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.SupportiveArrayForEngineeringStrains">
+            <summary>
+              An array needed for the formulation of engineering strains array.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.elasticConstitutiveMatrix">
+            <summary>
+              The constitutive matrix of the material while still in the elastic region.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.poissonRatio">
+            <summary>
+              The Poisson ratio.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Poisson%27s_ratio">Wikipedia - Poisson's Ratio</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.instantaneousShearModulus">
+            <summary>
+              The instantaneous shear modulus.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.instantaneousBulkModulus">
+            <summary>
+              The instantaneous bulk modulus.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.youngModulus">
+            <summary>
+              The young modulus.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Young%27s_modulus">Wikipedia - Young's Modulus</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.moduliTimeScale">
+            <summary>
+              Moduli time scale parameter:
+              "LONG_TERM" or "INSTANTANEOUS".
+              Default is "LONG_TERM"
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.viscoData">
+            <summary>
+              Viscocity data:
+              Prony series parameters
+              [gnormi, knormi,taui].
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.numberOfMaxwelElements">
+            <summary>
+              Viscocity data:
+              Prony series parameters
+              numberOfMaxwelElements.
+              Number of Maxwell elements
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.gnormi">
+            <summary>
+              Viscocity data:
+              Prony series parameters of Maxwell elements
+              gnormi : normalized shear modulus 
+              knormi : normalized bulk modulus 
+              taui   : normalized relaxation time
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.knormi">
+            <summary>
+              Viscocity data:
+              Prony series parameters of Maxwell elements
+              gnormi : normalized shear modulus 
+              knormi : normalized bulk modulus 
+              taui   : normalized relaxation time
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.taui">
+            <summary>
+              Viscocity data:
+              Prony series parameters of Maxwell elements
+              gnormi : normalized shear modulus 
+              knormi : normalized bulk modulus 
+              taui   : normalized relaxation time
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.dtime">
+            <summary>
+              The increment of time.
+              This is related to the history of incemental load. It is set 1.0 here for quick testing
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.constitutiveMatrix">
+            <summary>
+              The constitutive matrix of the material.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.incrementalStrains">
+            <summary>
+              The array of incremental strains.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Deformation_%28engineering%29">Deformation (engineering)</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.modified">
+            <summary>
+              Indicates whether this <see cref = "T:MGroup.Constitutive.Structural.IStructuralMaterial" /> is modified.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.stresses">
+            <summary>
+              The array of stresses.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.stressesNew">
+            <summary>
+              The array of new stresses.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.strains">
+            <summary>
+              The array of strains.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.strainsNew">
+            <summary>
+              The array of new strains.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.stateVariables">
+            <summary>
+              The array of state variables
+              maximum number Of Maxwel Elements = 13
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.stateVariablesNew">
+            <summary>
+              The array of new state variables
+              maximum number Of Maxwel Elements = 13
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.#ctor(System.Double,System.Double,System.String,System.Double[0:,0:])">
+            <summary>
+              Initializes a new instance of the <see cref = "!:VonMisesMaterial3DVisco" /> class.
+            </summary>
+            <param name = "youngModulus">
+              The young modulus.
+            </param>
+            <param name = "poissonRatio">
+              The Poisson ratio.
+            </param>
+            <exception cref = "T:System.ArgumentException"> When Poisson ratio is equal to 0.5.</exception>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.ConstitutiveMatrix">
+            <summary>
+              Gets the constitutive matrix.
+            </summary>
+            <value>
+              The constitutive matrix.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.ID">
+            <summary>
+              Gets the ID of the material.
+            </summary>
+            <value>
+              The id.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.IncrementalStrains">
+            <summary>
+              Gets the incremental strains of the finite element's material.
+            </summary>
+            <value>
+              The incremental strains.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Deformation_%28engineering%29">Deformation (engineering)</a>
+            </remarks>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.IsCurrentStateDifferent">
+            <summary>
+              Gets a value indicating whether this <see cref = "T:MGroup.Constitutive.Structural.IStructuralMaterial" /> is modified.
+            </summary>
+            <value>
+              <c>true</c> if modified; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.PoissonRatio">
+            <summary>
+              Gets the Poisson ratio.
+            </summary>
+            <value>
+              The Poisson ratio.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Poisson%27s_ratio">Wikipedia - Poisson's Ratio</a>
+            </remarks>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.Stresses">
+            <summary>
+              Gets the stresses of the finite element's material.
+            </summary>
+            <value>
+              The stresses.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Stress_%28mechanics%29">Stress (mechanics)</a>
+            </remarks>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.Strains">
+            <summary>
+              Gets the strains of the finite element's material.
+            </summary>
+            <value>
+              The stains.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.YoungModulus">
+            <summary>
+              Gets the Young's Modulus.
+            </summary>
+            <value>
+              The young modulus.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Young%27s_modulus">Wikipedia - Young's Modulus</a>
+            </remarks>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.Clone">
+            <summary>
+              Creates a new object that is a copy of the current instance.
+            </summary>
+            <returns>
+              A new object that is a copy of this instance.
+            </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.ResetModified">
+            <summary>
+              Resets the indicator of whether the material is modified.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.ClearStresses">
+            <summary>
+              Clears the stresses of the element's material.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.CreateState">
+            <summary>
+              Saves the state of the element's material.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+              Updates the element's material with the provided incremental strains.
+            </summary>
+            <param name = "strainsIncrement">The incremental strains to use for the next step.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.BuildConsistentTangentialConstitutiveMatrix">
+            <summary>
+              Builds the consistent tangential constitutive matrix.
+            </summary>
+            <param name = "value1"> This is a constant already calculated in the calling method. </param>
+            <remarks>
+              We need an additional constant here equal to: 2*G*G*deltaPlasticStrain*sqrt(3/J2elastic)
+              Since value1 is already calculated, the additional constant can be calculated through it:
+              value3 = 2 * G * value1;
+            </remarks>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.CalculateNextStressStrainPoint">
+            <summary>
+              Calculates the next stress-strain point.
+            </summary>
+            <exception cref = "T:System.InvalidOperationException"> When the new plastic strain is less than the previous one.</exception>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.GetFirstStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the first stress invariant (I1).
+            </summary>
+            <returns> The first stress invariant (I1).</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.GetMeanStress(System.Double[])">
+            <summary>
+              Calculates and returns the mean hydrostatic stress.
+            </summary>
+            <returns> The mean hydrostatic stress.</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.GetSecondStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the second stress invariant (I2).
+            </summary>
+            <returns> The second stress invariant (I2).</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.GetStressDeviator(System.Double[])">
+            <summary>
+              Calculates and returns the stress deviator tensor in vector form.
+            </summary>
+            <returns> The stress deviator tensor in vector form.</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.GetThirdStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the third stress invariant (I3).
+            </summary>
+            <returns> The third stress invariant (I3). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.GetDeviatorFirstStressInvariant(System.Double[])">
+            <summary>
+              Returns the first stress invariant of the stress deviator tensor (J1), which is zero.
+            </summary>
+            <returns> The first stress invariant of the stress deviator tensor (J1). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.GetDeviatorSecondStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the second stress invariant of the stress deviator tensor (J2).
+            </summary>
+            <returns> The second stress invariant of the stress deviator tensor (J2). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.ElasticMaterial3DVisco.GetDeviatorThirdStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the third stress invariant of the stress deviator tensor (J3).
+            </summary>
+            <returns> The third deviator stress invariant (J3). </returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.HyperElasticMaterial3DDefGrad">
+            <summary>
+            Deformation Gradient based implementation of a Mooney Rivlin hyperelastic material and a
+            NeoHookian hyperelastic material for
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.HyperElasticMaterial3DDefGrad.ConstitutiveMatrix">
+            <summary>
+            Returns the constitutive matrix of the material for the current strain state
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.HyperElasticMaterial3DDefGrad.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+            Updates the material state for a given new strain point.
+            </summary>
+            <param name="Delta">The given strain point.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.HyperElasticMaterial3DDefGrad.CreateState">
+            <summary>
+            Saves the current stress strain state of the material (after convergence of the iterative solution process
+            for a given loading step).
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.HyperElasticMaterial3DDefGrad.Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.HyperElasticMaterial3DDefGrad.System#ICloneable#Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.IContinuumMaterial2D">
+            <summary>
+            Interface for materials to be used in 2D finite elements
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.IContinuumMaterial3D">
+            <summary>
+            Interface for materials laws implementations to be used in 3D finite elements
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.IContinuumMaterial3DDefGrad">
+            <summary>
+            Interface for materials laws implementations to be used in deformation gradient based 3D finite elements formulations
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.IIsotropicContinuumMaterial2D">
+            <summary>
+            Interface for materials laws implementations of Isotropic 2D materials
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.IIsotropicContinuumMaterial3D">
+            <summary>
+            Interface for materials laws implementations of Isotropic 3D materials
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulomb3DNonLinearHardening.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+              Updates the element's material with the provided incremental strains.
+            </summary>
+            <param name = "strainsIncrement">The incremental strains to use for the next step.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulomb3DNonLinearHardening.GetSecondStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the second stress invariant (I2).
+            </summary>
+            <returns> The second stress invariant (I2).</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulomb3DNonLinearHardening.GetThirdStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the third stress invariant (I3).
+            </summary>
+            <returns> The third stress invariant (I3). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulomb3DNonLinearHardening.GetYieldBackSlopeFromPlasticStrain(System.Double,System.Double[0:,0:])">
+            <summary>
+              Calculates the yield/back stress slope of the isotropic/kinematic hardening curve
+            </summary>
+            <returns> The yield stress.</returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D">
+            <summary>
+            It is an implementation of the Mohr Coulomb Material model for 3D finite elements.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Creates an object of Mohr Coulomb Material class.
+            </summary>
+            <param name="youngModulus">young's Modulus value</param>
+            <param name="poissonRatio">poisson's Ratio value</param>
+            <param name="cohesion">cohesion coefficient value</param>
+            <param name="friction">friction coefficient value</param>
+            <param name="dilation">dilation coefficient value.</param>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.Stresses">
+            <summary>
+            Clears stresses - Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.ConstitutiveMatrix">
+            <summary>
+            Returns the constitutive matrix of the material for the current strain state
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+            Updates the material state for a given new strain point.
+            </summary>
+            <param name="Delta">The given strain point.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.ClearState">
+            <summary>
+            Clears the saved stress strain point connected to the last converged analysis step.
+            Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.CreateState">
+            <summary>
+            Saves the current stress strain state of the material (after convergence of the iterative solution process
+            for a given loading step).
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.ClearStresses">
+            <summary>
+            Clears stresses.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.ID">
+            <summary>
+            Returns the ID of the material class indicating a specific material law implementation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.IsCurrentStateDifferent">
+            <summary>
+            Resets the boolean that indicates if the constitutive matrix of the material has changed for the current iteratively update 
+            of the deformation state.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.ResetModified">
+            <summary>
+            Returns the ID of the material class indicating a specific material law implementation.
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.Coordinates">
+            <summary>
+            Returns coordinates. Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.MohrCoulombMaterial3D.Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.NeoHookeanMaterial3d">
+            <summary>
+            Deformation Gradient based implementation of a Mooney Rivlin hyperelastic material and a
+            NeoHookian hyperelastic material for
+            Authors: Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.NeoHookeanMaterial3d.ConstitutiveMatrix">
+            <summary>
+            Returns the constitutive matrix of the material for the current strain state
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.NeoHookeanMaterial3d.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+            Updates the material state for a given new strain point.
+            </summary>
+            <param name="Delta">The given strain point.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.NeoHookeanMaterial3d.CreateState">
+            <summary>
+            Saves the current stress strain state of the material (after convergence of the iterative solution process
+            for a given loading step).
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.NeoHookeanMaterial3d.Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.NeoHookeanMaterial3d.System#ICloneable#Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.Tresca.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+              Updates the element's material with the provided incremental strains.
+            </summary>
+            <param name = "strainsIncrement">The incremental strains to use for the next step.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.Tresca.GetSecondStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the second stress invariant (I2).
+            </summary>
+            <returns> The second stress invariant (I2).</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.Tresca.GetThirdStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the third stress invariant (I3).
+            </summary>
+            <returns> The third stress invariant (I3). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.Tresca.GetYieldBackSlopeFromPlasticStrain(System.Double,System.Double[0:,0:])">
+            <summary>
+              Calculates the yield/back stress slope of the isotropic/kinematic hardening curve
+            </summary>
+            <returns> The yield stress.</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.TsaiHill.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+              Updates the element's material with the provided incremental strains.
+            </summary>
+            <param name = "strainsIncrement">The incremental strains to use for the next step.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.TsaiWu.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+              Updates the element's material with the provided incremental strains.
+            </summary>
+            <param name = "strainsIncrement">The incremental strains to use for the next step.</param>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.PoissonRatioForIncompressibleSolid">
+            <summary>
+              The Poisson ratio value of an incompressible solid.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.TotalStrains">
+            <summary>
+              The total number of strains.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.TotalStresses">
+            <summary>
+              The total number of stresses.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.SupportiveMatrixForConsistentConstitutiveMatrix">
+            <summary>
+              An array needed for the formulation of the consistent constitutive matrix.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.elasticConstitutiveMatrix">
+            <summary>
+              The constitutive matrix of the material while still in the elastic region.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.IsotropicHardeningCurve">
+            <summary>
+             Isotropic Hardening Curve 1 row : plastic strain 2 row: yield stress
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.KinematicHardeningCurve" -->
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.poissonRatio">
+            <summary>
+              The Poisson ratio.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Poisson%27s_ratio">Wikipedia - Poisson's Ratio</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.shearModulus">
+            <summary>
+              The shear modulus.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Shear_modulus">Wikipedia - Shear Modulus</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.yieldStress">
+            <summary>
+              The yields stress.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Yield_%28engineering%29">Yield (engineering)</a>
+              The current yield strength or yield point of a material is defined in engineering and materials science as the stress at which a material begins to deform plastically.
+            </remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.yieldStressNew" -->
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.youngModulus">
+            <summary>
+              The young modulus.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Young%27s_modulus">Wikipedia - Young's Modulus</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.constitutiveMatrix">
+            <summary>
+              The constitutive matrix of the material.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.incrementalStrains">
+            <summary>
+              The array of incremental strains.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Deformation_%28engineering%29">Deformation (engineering)</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.modified">
+            <summary>
+              Indicates whether this <see cref = "!:IFiniteElementMaterial" /> is modified.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.plasticStrain">
+            <summary>
+              The current plastic strain.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.plasticStrainNew">
+            <summary>
+              The new plastic strain.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.kinematicscalarb">
+            <summary>
+              The Scalar value of the kinematic hardening curve.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.stresses">
+            <summary>
+              The array of stresses.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.backstresses">
+            <summary>
+              The array of backstresses-center of yield surface.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.backstressesnew">
+            <summary>
+              The array of new backstresses-center of yield surface.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.stressesNew">
+            <summary>
+              The array of new stresses.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+              Initializes a new instance of the <see cref = "T:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D" /> class.
+            </summary>
+            <param name = "youngModulus">
+              The young modulus.
+            </param>
+            <param name = "poissonRatio">
+              The Poisson ratio.
+            </param>
+            <param name = "yieldStress">
+              The yield stress.
+            </param>
+            <param name = "hardeningRatio">
+              The hardening ratio.
+            </param>
+            <exception cref = "T:System.ArgumentException"> When Poisson ratio is equal to 0.5.</exception>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.ConstitutiveMatrix">
+            <summary>
+              Gets the constitutive matrix.
+            </summary>
+            <value>
+              The constitutive matrix.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.ID">
+            <summary>
+              Gets the ID of the material.
+            </summary>
+            <value>
+              The id.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.IncrementalStrains">
+            <summary>
+              Gets the incremental strains of the finite element's material.
+            </summary>
+            <value>
+              The incremental strains.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Deformation_%28engineering%29">Deformation (engineering)</a>
+            </remarks>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.Modified">
+            <summary>
+              Gets a value indicating whether this <see cref = "!:IFiniteElementMaterial" /> is modified.
+            </summary>
+            <value>
+              <c>true</c> if modified; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.PlasticStrain">
+            <summary>
+              Gets the plastic strain.
+            </summary>
+            <value>
+              The plastic strain.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.PoissonRatio">
+            <summary>
+              Gets the Poisson ratio.
+            </summary>
+            <value>
+              The Poisson ratio.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Poisson%27s_ratio">Wikipedia - Poisson's Ratio</a>
+            </remarks>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.Stresses">
+            <summary>
+              Gets the stresses of the finite element's material.
+            </summary>
+            <value>
+              The stresses.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Stress_%28mechanics%29">Stress (mechanics)</a>
+            </remarks>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.YoungModulus">
+            <summary>
+              Gets the Young's Modulus.
+            </summary>
+            <value>
+              The young modulus.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Young%27s_modulus">Wikipedia - Young's Modulus</a>
+            </remarks>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.Clone">
+            <summary>
+              Creates a new object that is a copy of the current instance.
+            </summary>
+            <returns>
+              A new object that is a copy of this instance.
+            </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.ResetModified">
+            <summary>
+              Resets the indicator of whether the material is modified.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+              Updates the element's material with the provided incremental strains.
+            </summary>
+            <param name = "strainsIncrement">The incremental strains to use for the next step.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.SaveState">
+            <summary>
+              Saves the state of the element's material.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.UpdateMaterial(System.Double[])">
+            <summary>
+              Updates the element's material with the provided incremental strains.
+            </summary>
+            <param name = "strainsIncrement">The incremental strains to use for the next step.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.BuildConsistentTangentialConstitutiveMatrix(System.Double,System.Double[])">
+            <summary>
+              Builds the consistent tangential constitutive matrix.
+            </summary>
+            <param name = "vonMisesStress"> This is a constant already calculated in the calling method. </param>
+            <remarks>
+             
+              
+              
+            </remarks>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.BuildTangentialConstitutiveMatrix">
+            <summary>
+              Builds the tangential constitutive matrix.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.CalculateNextStressStrainPoint">
+            <summary>
+              Calculates the next stress-strain point.
+            </summary>
+            <exception cref = "T:System.InvalidOperationException"> When the new plastic strain is less than the previous one.</exception>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.GetFirstStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the first stress invariant (I1).
+            </summary>
+            <returns> The first stress invariant (I1).</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.GetMeanStress(System.Double[])">
+            <summary>
+              Calculates and returns the mean hydrostatic stress.
+            </summary>
+            <returns> The mean hydrostatic stress.</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.GetSecondStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the second stress invariant (I2).
+            </summary>
+            <returns> The second stress invariant (I2).</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.GetStressDeviator(System.Double[])">
+            <summary>
+              Calculates and returns the stress deviator tensor in vector form.
+            </summary>
+            <returns> The stress deviator tensor in vector form.</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.GetYieldBackStressFromPlasticStrain(System.Double,System.Double[0:,0:])">
+            <summary>
+              Calculates the yield/back stress from the plastic strain using the isotropic/kinematic hardening curve
+            </summary>
+            <returns> The yield stress.</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.GetYieldBackSlopeFromPlasticStrain(System.Double,System.Double[0:,0:])">
+            <summary>
+              Calculates the yield/back stress slope of the isotropic/kinematic hardening curve
+            </summary>
+            <returns> The yield stress.</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.GetThirdStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the third stress invariant (I3).
+            </summary>
+            <returns> The third stress invariant (I3). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.GetDeviatorFirstStressInvariant(System.Double[])">
+            <summary>
+              Returns the first stress invariant of the stress deviator tensor (J1), which is zero.
+            </summary>
+            <returns> The first stress invariant of the stress deviator tensor (J1). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.GetDeviatorSecondStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the second stress invariant of the stress deviator tensor (J2).
+            </summary>
+            <returns> The second stress invariant of the stress deviator tensor (J2). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.GetDeviatorThirdStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the third stress invariant of the stress deviator tensor (J3).
+            </summary>
+            <returns> The third deviator stress invariant (J3). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMises3DNonLinearHardening.readMatrixData(System.String,System.Double[0:,0:]@)">
+            <summary>
+              Reads the data points of the curves. Stored in .txt files.
+            </summary>
+            <returns> The curve that is stored in the .txt file. </returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D">
+            <summary>
+              Class for 3D Von Mises materials.
+            </summary>
+            <a href = "http://en.wikipedia.org/wiki/Von_Mises_yield_criterion">Wikipedia -Von Mises yield criterion</a>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.PoissonRatioForIncompressibleSolid">
+            <summary>
+              The Poisson ratio value of an incompressible solid.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.TotalStrains">
+            <summary>
+              The total number of strains.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.TotalStresses">
+            <summary>
+              The total number of stresses.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.SupportiveMatrixForConsistentConstitutiveMatrix">
+            <summary>
+              An array needed for the formulation of the consistent constitutive matrix.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.elasticConstitutiveMatrix">
+            <summary>
+              The constitutive matrix of the material while still in the elastic region.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.hardeningRatio">
+            <summary>
+              Hardening modulus for linear hardening.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.poissonRatio">
+            <summary>
+              The Poisson ratio.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Poisson%27s_ratio">Wikipedia - Poisson's Ratio</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.shearModulus">
+            <summary>
+              The shear modulus.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Shear_modulus">Wikipedia - Shear Modulus</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.yieldStress">
+            <summary>
+              The yields stress.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Yield_%28engineering%29">Yield (engineering)</a>
+              The yield strength or yield point of a material is defined in engineering and materials science as the stress at which a material begins to deform plastically.
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.youngModulus">
+            <summary>
+              The young modulus.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Young%27s_modulus">Wikipedia - Young's Modulus</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.constitutiveMatrix">
+            <summary>
+              The constitutive matrix of the material.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.incrementalStrains">
+            <summary>
+              The array of incremental strains.
+            </summary>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Deformation_%28engineering%29">Deformation (engineering)</a>
+            </remarks>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.modified">
+            <summary>
+              Indicates whether this <see cref = "T:MGroup.Constitutive.Structural.IStructuralMaterial" /> is modified.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.plasticStrain">
+            <summary>
+              The current plastic strain.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.plasticStrainNew">
+            <summary>
+              The new plastic strain.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.stresses">
+            <summary>
+              The array of stresses.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.stressesNew">
+            <summary>
+              The array of new stresses.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.#ctor(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+              Initializes a new instance of the <see cref = "T:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D" /> class.
+            </summary>
+            <param name = "youngModulus">
+              The young modulus.
+            </param>
+            <param name = "poissonRatio">
+              The Poisson ratio.
+            </param>
+            <param name = "yieldStress">
+              The yield stress.
+            </param>
+            <param name = "hardeningRatio">
+              The hardening ratio.
+            </param>
+            <exception cref = "T:System.ArgumentException"> When Poisson ratio is equal to 0.5.</exception>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.ConstitutiveMatrix">
+            <summary>
+              Gets the constitutive matrix.
+            </summary>
+            <value>
+              The constitutive matrix.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.ID">
+            <summary>
+              Gets the ID of the material.
+            </summary>
+            <value>
+              The id.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.IncrementalStrains">
+            <summary>
+              Gets the incremental strains of the finite element's material.
+            </summary>
+            <value>
+              The incremental strains.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Deformation_%28engineering%29">Deformation (engineering)</a>
+            </remarks>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.IsCurrentStateDifferent">
+            <summary>
+              Gets a value indicating whether this <see cref = "T:MGroup.Constitutive.Structural.IStructuralMaterial" /> is modified.
+            </summary>
+            <value>
+              <c>true</c> if modified; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.PlasticStrain">
+            <summary>
+              Gets the plastic strain.
+            </summary>
+            <value>
+              The plastic strain.
+            </value>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.PoissonRatio">
+            <summary>
+              Gets the Poisson ratio.
+            </summary>
+            <value>
+              The Poisson ratio.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Poisson%27s_ratio">Wikipedia - Poisson's Ratio</a>
+            </remarks>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.Stresses">
+            <summary>
+              Gets the stresses of the finite element's material.
+            </summary>
+            <value>
+              The stresses.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Stress_%28mechanics%29">Stress (mechanics)</a>
+            </remarks>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.YoungModulus">
+            <summary>
+              Gets the Young's Modulus.
+            </summary>
+            <value>
+              The young modulus.
+            </value>
+            <remarks>
+              <a href = "http://en.wikipedia.org/wiki/Young%27s_modulus">Wikipedia - Young's Modulus</a>
+            </remarks>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.Clone">
+            <summary>
+              Creates a new object that is a copy of the current instance.
+            </summary>
+            <returns>
+              A new object that is a copy of this instance.
+            </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.ResetModified">
+            <summary>
+              Resets the indicator of whether the material is modified.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.ClearStresses">
+            <summary>
+              Clears the stresses of the element's material.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.CreateState">
+            <summary>
+              Saves the state of the element's material.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+              Updates the element's material with the provided incremental strains.
+            </summary>
+            <param name = "strainsIncrement">The incremental strains to use for the next step.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.BuildConsistentTangentialConstitutiveMatrix(System.Double)">
+            <summary>
+              Builds the consistent tangential constitutive matrix.
+            </summary>
+            <param name = "value1"> This is a constant already calculated in the calling method. </param>
+            <remarks>
+              We need an additional constant here equal to: 2*G*G*deltaPlasticStrain*sqrt(3/J2elastic)
+              Since value1 is already calculated, the additional constant can be calculated through it:
+              value3 = 2 * G * value1;
+            </remarks>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.BuildTangentialConstitutiveMatrix">
+            <summary>
+              Builds the tangential constitutive matrix.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.CalculateNextStressStrainPoint">
+            <summary>
+              Calculates the next stress-strain point.
+            </summary>
+            <exception cref = "T:System.InvalidOperationException"> When the new plastic strain is less than the previous one.</exception>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.GetFirstStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the first stress invariant (I1).
+            </summary>
+            <returns> The first stress invariant (I1).</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.GetMeanStress(System.Double[])">
+            <summary>
+              Calculates and returns the mean hydrostatic stress.
+            </summary>
+            <returns> The mean hydrostatic stress.</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.GetSecondStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the second stress invariant (I2).
+            </summary>
+            <returns> The second stress invariant (I2).</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.GetStressDeviator(System.Double[])">
+            <summary>
+              Calculates and returns the stress deviator tensor in vector form.
+            </summary>
+            <returns> The stress deviator tensor in vector form.</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.GetThirdStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the third stress invariant (I3).
+            </summary>
+            <returns> The third stress invariant (I3). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.GetDeviatorFirstStressInvariant(System.Double[])">
+            <summary>
+              Returns the first stress invariant of the stress deviator tensor (J1), which is zero.
+            </summary>
+            <returns> The first stress invariant of the stress deviator tensor (J1). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.GetDeviatorSecondStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the second stress invariant of the stress deviator tensor (J2).
+            </summary>
+            <returns> The second stress invariant of the stress deviator tensor (J2). </returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Continuum.VonMisesMaterial3D.GetDeviatorThirdStressInvariant(System.Double[])">
+            <summary>
+              Calculates and returns the third stress invariant of the stress deviator tensor (J3).
+            </summary>
+            <returns> The third deviator stress invariant (J3). </returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Fiber.IFiberMaterial">
+            <summary>
+            Interface for materials laws implementations to be used in beam sections analysis 
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Fiber.IFiberStructuralMaterial">
+            <summary>
+            Interface for materials laws implementations to be used in beam sections analysis 
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.IStructuralMaterial">
+            <summary>
+            Interface for material law implementations to be used in structural mechanics problems
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Line.BeamSection2D.#ctor(System.Double,System.Double)">
+             Creates a new instance of {@link BeamSection2D} class.
+            
+             @param area
+                        Section area
+             @param inertia
+                        Moment of inertia
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Line.BeamSection3D">
+             Class for three-dimensional beam element sections.
+            
+             @author Theofilos Manitaras
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Line.BeamSection3D.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+             Creates a new instance of {@link BeamSection3D} class.
+            
+             @param area
+                        Section area
+             @param inertiaY
+                        Moment of inertia on axis Y
+             @param inertiaZ
+                        Moment of inertia on axis Z
+             @param torsionalInertia
+                        Torsional moment of inertia
+             @param effectiveAreaY
+                        The effective area on axis Y
+             @param effectiveAreaZ
+                        The effective area on axis Z
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D">
+            <summary>
+            It is an implementation of a linear elastic isotropic constitutive law for 2D finite elements.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.#ctor(System.Double,System.Double,MGroup.Constitutive.Structural.Planar.StressState2D)">
+            <summary>
+            Creastes a new object of <see cref="T:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D"/> class.
+            </summary>
+            <param name="stressState"> The stress strain state of the 2D problem.</param>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.ConstitutiveMatrix">
+            <summary>
+            Returns the constitutive matrix of the material for the current strain state
+            </summary>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.Stresses">
+            <summary>
+            Returns the stresses of this material for the current strain state.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.ClearState">
+            <summary>
+            Clears the saved stress strain point connected to the last converged analysis step.
+            Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.ClearStresses">
+            <summary>
+            Clears stresses - Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.CreateState">
+            <summary>
+            Saves the current stress strain state of the material (after convergence of the iterative solution process
+            for a given loading step).
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.UpdateConstitutiveMatrixAndEvaluateResponse(System.Double[])">
+            <summary>
+            Updates the material state for a given new strain point.
+            </summary>
+            <param name="Delta">The given strain point.</param>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.ID">
+            <summary>
+            Returns the ID of the material class indicating a specific material law implementation.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.IsCurrentStateDifferent">
+            <summary>
+            Returns a boolean indicating if the constitutive matrix of the material has changed for the current iteratively update 
+            of the deformation state.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.ResetModified">
+            <summary>
+            Resets the boolean that indicates if the constitutive matrix of the material has changed for the current iteratively update 
+            of the deformation state.
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.System#ICloneable#Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.Clone">
+            <summary>
+            Creates a clone of material object with the same parameters.
+            </summary>
+            <returns>The created material clone</returns>
+        </member>
+        <member name="P:MGroup.Constitutive.Structural.Planar.ElasticMaterial2D.Coordinates">
+            <summary>
+            Returns coordinates. Currently not a valid operation.
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Planar.ElasticPlaneStrainVonMises">
+            <summary>
+            Calculates the equivalent von Mises stress according to https://en.wikipedia.org/wiki/Von_Mises_yield_criterion#Summary.
+            For plane strain conditions, the components s23 = s31 = 0, but s33 = E*v / ((1+v)*(1-2*v)) * (e11+e22). Therefore it
+            depends on the Young modulus E and Poisson ratio v.
+            Authors: Serafeim Bakalakos
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticPlaneStrainVonMises.#ctor(MGroup.Constitutive.Structural.Planar.ElasticMaterial2D)">
+            <summary>
+            Sets the Young's modulus and the Poisson's ratio to be used
+            </summary>
+            <param name="material"> the elastic isotropic material to set the parameters from.</param>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.ElasticPlaneStrainVonMises.Calculate(System.Double[],System.Double[])">
+            <summary>
+            Calculates the equivalent von Mises stress for plain strain conditions and given strain and stress tensor.
+            </summary>
+            <param name="strainTensor2D"> A 2D strain tensor.</param>
+            <param name="cauchyStressTensor2D"> A 2D cauchy stress tensor. </param>
+            <returns></returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Planar.IVonMisesStress2D">
+            <summary>
+            Calculates the von Mises equivalent stress given the Cauchy stress.
+            Authors: Serafeim Bakalakos
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.IVonMisesStress2D.Calculate(System.Double[],System.Double[])">
+            <summary>
+            
+            </summary>
+            <param name="strainTensor2D">Its components are: e11, e22, e12</param>
+            <param name="cauchyStressTensor2D">Its components are: s11, s22, s12.</param>
+            <returns></returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Planar.PlaneStressVonMises">
+            <summary>
+            Calculates the equivalent von Mises stress according to https://en.wikipedia.org/wiki/Von_Mises_yield_criterion#Summary.
+            For plane stress conditions, the computation doesn't depend on the material properties.
+            Authors: Serafeim Bakalakos
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Planar.PlaneStressVonMises.Calculate(System.Double[],System.Double[])">
+            <summary>
+            Calculates the equivalent von Mises stress for plane stress conditions.
+            </summary>
+            <param name="strainTensor2D"> A 2D strain tensor.</param>
+            <param name="cauchyStressTensor2D"> A 2D cauchy stress tensor. </param>
+            <returns></returns>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Planar.StressState2D">
+            <summary>
+            Authors: Dimitris Tsapetis
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Shells.IShellMaterial">
+            <summary>
+            Interface for materials laws implementations to be used with shell finite elements
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Shells.IShellSectionMaterial">
+            <summary>
+            Interface for materials laws implementations to be used with shell finite elements with through section thickness integration 
+            embedded in the material law code
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Shells.ShellElasticMaterial2D">
+            <summary>
+            An elastic isotropic material to be used in shell finite element formulations that take into account the
+            Kirchhof Love hypothesis
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Shells.ShellElasticMaterial2Dtransformationb">
+            <summary>
+            Isotropic elastic shell material that accounts for no out of plane shear deformation
+            Authors Gerasimos Sotiropoulos
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Shells.ShellElasticMaterial3D">
+            <summary>
+            An elastic isotropic material to be used in shell finite element formulations that take into account the
+            Reissner Mindlin hypothesis
+            Authors Gerasimos-Serafeim 
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Shells.ShellElasticSectionMaterial2D">
+            <summary>
+            An elastic isotropic material to be used in shell finite element formulations that take into account the
+            Kirchhof Love hypothesis.
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.StructuralDof">
+            <summary>
+            Degrees of freedom corresponding to the movement of a point/body along or around the 3 possible axes. Implements enum 
+            pattern.
+            Authors: Serafeim Bakalakos
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.StructuralDof.TranslationX">
+            <summary>
+            This dof corresponds to translation along X axis.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.StructuralDof.TranslationY">
+            <summary>
+            This dof corresponds to translation along Y axis.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.StructuralDof.TranslationZ">
+            <summary>
+            This dof corresponds to translation along Z axis.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.StructuralDof.RotationX">
+            <summary>
+            This dof corresponds to rotation around X axis.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.StructuralDof.RotationY">
+            <summary>
+            This dof corresponds to rotation around Y axis.
+            </summary>
+        </member>
+        <member name="F:MGroup.Constitutive.Structural.StructuralDof.RotationZ">
+            <summary>
+            This dof corresponds to rotation around Z axis.
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Transient.ITransientAnalysisProperties">
+            <summary>
+            Contains material properties used for dynamic or modal analysis. These are uniform for the whole element and immutable.
+            Authors: Serafeim Bakalakos
+            </summary>
+        </member>
+        <member name="T:MGroup.Constitutive.Structural.Transient.TransientAnalysisProperties">
+            <summary>
+            Contains material properties used for dynamic or modal analysis. These are uniform for the whole element and immutable.
+            Authors: Serafeim Bakalakos
+            </summary>
+        </member>
+        <member name="M:MGroup.Constitutive.Structural.Transient.TransientAnalysisProperties.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            Creates an object of class <see cref="T:MGroup.Constitutive.Structural.Transient.TransientAnalysisProperties"/> containing dynamic material properties.
+            </summary>
+            <param name="density"> Material density</param>
+            <param name="rayleighCoeffMass"> </param>
+            <param name="rayleighCoeffStiffness"></param>
+        </member>
+    </members>
+</doc>
